@@ -11,26 +11,28 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private InputActionReference _moveActionReference;
 
     [Header("Movement Parameters")]
-    [SerializeField] private float _moveDuration = 0.5f;
+    [SerializeField] private float _moveSpeed = 1f;
     [SerializeField] private Transform[] _moveTargets;
 
     private int _currentLaneIndex = 1;
     private bool _isMoving = false;
-    private float xVelocity = 0.0f;
+    private const float THRESHOLD = 0.01f;
 
     private void OnEnable()
     {
+        _moveActionReference.action.Enable();
         _moveActionReference.action.performed += OnMove;
     }
 
     private void OnDisable()
     {
         _moveActionReference.action.performed -= OnMove;
+        _moveActionReference.action.Disable();
     }
 
     private void OnMove(InputAction.CallbackContext context)
     {
-        Vector2 moveInput = context.ReadValue<Vector2>();
+        var moveInput = context.ReadValue<Vector2>();
 
         if (moveInput.x > 0)
         {
@@ -61,19 +63,16 @@ public class PlayerMovementController : MonoBehaviour
     private IEnumerator MoveCoroutine(Transform target)
     {
         _isMoving = true;
-        float moveTimer = 0f;
+        var velocity = Vector3.zero;
+        Vector3 targetPosition = new(target.position.x, transform.position.y, transform.position.z);
 
-        while (moveTimer < _moveDuration)
+        while (Vector3.Distance(transform.position, targetPosition) > THRESHOLD)
         {
-            moveTimer += Time.deltaTime;
-            float normalizedTime = Mathf.Clamp01(moveTimer / _moveDuration);
-            float newHorizontalPosition = Mathf.SmoothDamp(transform.position.x, target.position.x, ref xVelocity, normalizedTime);
-            
-            transform.position = new Vector3(newHorizontalPosition, transform.position.y, transform.position.z);
-
+            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, _moveSpeed);
             yield return null;
         }
 
+        transform.position = targetPosition;
         _isMoving = false;
     }
 }
