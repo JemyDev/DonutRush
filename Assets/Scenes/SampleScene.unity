@@ -440,6 +440,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 1234216500}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: f34ae692d9e3a496d9ca0a656eccdf92, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f34ae692d9e3a496d9ca0a656eccdf92, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f34ae692d9e3a496d9ca0a656eccdf92, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f34ae692d9e3a496d9ca0a656eccdf92, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -620,11 +632,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementController
   _moveActionReference: {fileID: 222894249}
   _moveDuration: 0.5
+  _moveSpeed: 0.1
   _moveTargets:
   - {fileID: 1388953016}
   - {fileID: 1026925684}
   - {fileID: 1658262282}
-  xVelocity: 0
 --- !u!1 &1388953015
 GameObject:
   m_ObjectHideFlags: 0
