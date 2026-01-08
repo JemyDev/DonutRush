@@ -9,6 +9,13 @@ public class PlayerMovementController : MonoBehaviour
 {
     [Header("Inputs")]
     [SerializeField] private InputActionReference _moveActionReference;
+    [SerializeField] private InputActionReference _jumpActionReference;
+
+    [Header("Jump Parameters")]
+    [SerializeField] private float _jumpDuration = 1f;
+    [SerializeField] private float _jumpHeight = 2f;
+    [SerializeField] private AnimationCurve _jumpCurve;
+    [SerializeField] private AnimationCurve _fallCurve;
 
     [Header("Movement Parameters")]
     [SerializeField] private float _moveSpeed = 1f;
@@ -16,18 +23,23 @@ public class PlayerMovementController : MonoBehaviour
 
     private int _currentLaneIndex = 1;
     private bool _isMoving = false;
+    private bool _isJumping = false;
     private const float THRESHOLD = 0.01f;
 
     private void OnEnable()
     {
         _moveActionReference.action.Enable();
         _moveActionReference.action.performed += OnMove;
+        _jumpActionReference.action.Enable();
+        _jumpActionReference.action.performed += OnJump;
     }
 
     private void OnDisable()
     {
         _moveActionReference.action.performed -= OnMove;
         _moveActionReference.action.Disable();
+        _jumpActionReference.action.performed -= OnJump;
+        _jumpActionReference.action.Disable();
     }
 
     private void OnMove(InputAction.CallbackContext context)
@@ -60,6 +72,14 @@ public class PlayerMovementController : MonoBehaviour
         }
     }
 
+    private void OnJump(InputAction.CallbackContext context)
+    {
+        if (_isJumping)
+            return;
+
+        StartCoroutine(JumpCoroutine());
+    }
+
     private IEnumerator MoveCoroutine(Transform target)
     {
         _isMoving = true;
@@ -74,5 +94,42 @@ public class PlayerMovementController : MonoBehaviour
 
         transform.position = targetPosition;
         _isMoving = false;
+    }
+
+    private IEnumerator JumpCoroutine()
+    {
+        _isJumping = true;
+
+        var halfJumpDuration = _jumpDuration / 2;
+
+        var jumpTimer = 0f;
+
+        while (jumpTimer < halfJumpDuration)
+        {
+            jumpTimer += Time.deltaTime;
+            var normalizedTime = Mathf.Clamp01(jumpTimer / halfJumpDuration);
+            var targetHeight = _jumpCurve.Evaluate(normalizedTime) * _jumpHeight;
+
+            var targetPosition = new Vector3(transform.position.x, targetHeight, transform.position.z);
+            transform.position = targetPosition;
+
+            yield return null;
+        }
+
+        jumpTimer = 0f;
+
+        while (jumpTimer < halfJumpDuration)
+        {
+            jumpTimer += Time.deltaTime;
+            var normalizedTime = Mathf.Clamp01(jumpTimer / halfJumpDuration);
+            
+            var targetHeight = _fallCurve.Evaluate(normalizedTime) * _jumpHeight;
+            var targetPosition = new Vector3(transform.position.x, targetHeight, transform.position.z);
+            transform.position = targetPosition;
+
+            yield return null;
+        }
+
+        _isJumping = false;
     }
 }
