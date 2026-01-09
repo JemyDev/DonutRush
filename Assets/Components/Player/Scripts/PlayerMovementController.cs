@@ -21,10 +21,15 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float _moveSpeed = 1f;
     [SerializeField] private Transform[] _moveTargets;
 
+    [Header("Components")]
+    [SerializeField] private Animator _animator;
+
     private int _currentLaneIndex = 1;
     private bool _isMoving = false;
     private bool _isJumping = false;
     private const float THRESHOLD = 0.01f;
+    private const string JUMP_PARAMETER = "IsJumping";
+    private const string GROUNDED_PARAMETER = "Grounded";
 
     private void OnEnable()
     {
@@ -99,6 +104,7 @@ public class PlayerMovementController : MonoBehaviour
     private IEnumerator JumpCoroutine()
     {
         _isJumping = true;
+        _animator.SetBool(JUMP_PARAMETER, true);
 
         var halfJumpDuration = _jumpDuration / 2;
 
@@ -115,6 +121,8 @@ public class PlayerMovementController : MonoBehaviour
 
             yield return null;
         }
+        
+        _animator.SetBool(JUMP_PARAMETER, false);
 
         jumpTimer = 0f;
 
@@ -129,7 +137,8 @@ public class PlayerMovementController : MonoBehaviour
 
             yield return null;
         }
-
+        
+        _animator.SetTrigger(GROUNDED_PARAMETER);
         _isJumping = false;
     }
 }
