@@ -27,9 +27,15 @@ public class PlayerMovementController : MonoBehaviour
     private int _currentLaneIndex = 1;
     private bool _isMoving = false;
     private bool _isJumping = false;
+    private float _currentPositionY;
     private const float THRESHOLD = 0.01f;
     private const string JUMP_PARAMETER = "IsJumping";
     private const string GROUNDED_PARAMETER = "Grounded";
+
+    private void Start()
+    {
+        _currentPositionY = transform.position.y;
+    }
 
     private void OnEnable()
     {
@@ -89,7 +95,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         _isMoving = true;
         var velocity = Vector3.zero;
-        Vector3 targetPosition = new(target.position.x, transform.position.y, transform.position.z);
+        Vector3 targetPosition = new(target.position.x, target.position.y + _currentPositionY, transform.position.z);
 
         while (Vector3.Distance(transform.position, targetPosition) > THRESHOLD)
         {
