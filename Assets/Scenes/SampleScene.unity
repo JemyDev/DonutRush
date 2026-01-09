@@ -441,12 +441,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0231131dd6a12a439469a5e3f4dbb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleGenerator
-  _translationSpeed: 1
+  _translationSpeed: 3
   _activeChunksCount: 5
   _behindChunksCount: 2
   _preventSameChunkGeneration: 1
   _chunkPrefabs:
   - {fileID: 4101783732453739026, guid: 49e8e7ca19665784eb9a0af60c3e2c45, type: 3}
+  - {fileID: 5257790882892001718, guid: 201ea13ad0fd44a4689718a209f4feda, type: 3}
+  - {fileID: 700052206457168482, guid: 6de79867c53a94d4d98e228f59b8fb90, type: 3}
+  - {fileID: 4099437477763088553, guid: c63f05f2c47fb644a93323f0377ce4cc, type: 3}
 --- !u!1 &698271799
 GameObject:
   m_ObjectHideFlags: 0
@@ -645,6 +648,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1234216500}
   - component: {fileID: 1234216501}
+  - component: {fileID: 1234216503}
   - component: {fileID: 1234216502}
   m_Layer: 0
   m_Name: Player
@@ -761,6 +765,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1234216503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234216499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb081760f687f6f4faeaebcb1eb5ade9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCollisionController
+  _boxCenter: {x: 0, y: 0, z: 0}
+  _boxHalfSize: {x: 0.24, y: 0.1, z: 0.24}
+  _invulnerabilityDuration: 0
+  _isHit: 0
 --- !u!114 &1306055501
 MonoBehaviour:
   m_ObjectHideFlags: 0
