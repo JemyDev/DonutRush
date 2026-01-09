@@ -95,7 +95,7 @@ public class ObstacleGenerator : MonoBehaviour
             }
         }
 
-        int missingChunkCount = _activeChunksCount - _activeChunks.Count;
+        var missingChunkCount = _activeChunksCount - _activeChunks.Count;
 
         for (var i = 0; i < missingChunkCount; i++)
         {
