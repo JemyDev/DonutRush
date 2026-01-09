@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 763dfe6496dd34645be43b9fb3af7cce, type: 3}
   m_Name: Coffee
   m_EditorClassIdentifier: Assembly-CSharp::IngredientScriptableObject
-  ingredientColor: {r: 0, g: 0, b: 0, a: 0}
-  ingredientScore: 0
-  ingredientName: 
-  ingredientSprite: {fileID: 0}
+  ingredientColor: {r: 0.6039216, g: 0.3764706, b: 0.19215687, a: 0}
+  ingredientScore: 15
+  ingredientName: Coffee
+  ingredientSprite: {fileID: 21300000, guid: e0654092146b349cdbf2909a9205bca0, type: 3}
   ingredientPrefab: {fileID: 0}
-  ingredientMaterial: {fileID: 0}
+  ingredientMaterial: {fileID: 2100000, guid: a6c08edcc0ecb4292b73e1092ba2a664, type: 2}

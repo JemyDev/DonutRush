@@ -15,6 +15,6 @@ MonoBehaviour:
   ingredientColor: {r: 0.1882353, g: 0.101960786, b: 0.03137255, a: 0}
   ingredientScore: 100
   ingredientName: Chocolate
-  ingredientSprite: {fileID: 0}
+  ingredientSprite: {fileID: 21300000, guid: 6abcc03757a494181bcd2f733079582b, type: 3}
   ingredientPrefab: {fileID: 0}
   ingredientMaterial: {fileID: 2100000, guid: 1958ba3c528324d1a9e485f7bc5b3abf, type: 2}

@@ -15,6 +15,6 @@ MonoBehaviour:
   ingredientColor: {r: 0.65882355, g: 0.21568628, b: 0.23137255, a: 0}
   ingredientScore: 25
   ingredientName: Strawberry
-  ingredientSprite: {fileID: 0}
+  ingredientSprite: {fileID: 21300000, guid: b72023ef6c5c54ebb94ee8c520cfe2e9, type: 3}
   ingredientPrefab: {fileID: 0}
   ingredientMaterial: {fileID: 2100000, guid: 9d8deb4f3f738469ba18b4c914317298, type: 2}
