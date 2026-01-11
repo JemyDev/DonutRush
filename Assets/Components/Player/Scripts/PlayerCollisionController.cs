@@ -13,6 +13,8 @@ public class PlayerCollisionController : MonoBehaviour
     [Header("Invulnerability Parameters")]
     [SerializeField] private bool _hasHitWall;
     [SerializeField] private bool _hasHitDoor;
+
+    [SerializeField] private string _ingredientName = "Chocolate";
     
     private readonly Collider[] _hitResults = new Collider[2];
     private const string WALL_TAG = "Wall";
@@ -34,14 +36,12 @@ public class PlayerCollisionController : MonoBehaviour
                 if (_hitResults[i].CompareTag(WALL_TAG) && !_hasHitWall)
                 {
                     _hasHitWall = true;
-                    GameEventSystem.OnPlayerHit?.Invoke();
-                    Debug.Log("Player took damage");
+                    GameEventSystem.OnPlayerCollision?.Invoke();
                 }
                 else if (_hitResults[i].CompareTag(DOOR_TAG) && !_hasHitDoor)
                 {
                     _hasHitDoor = true;
-                    GameEventSystem.OnDoorPassed?.Invoke();
-                    Debug.Log("Player passed through door");
+                    GameEventSystem.OnIngredientCollected?.Invoke(_ingredientName);
                 }
             }
         }
