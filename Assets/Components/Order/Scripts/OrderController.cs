@@ -8,8 +8,7 @@ using UnityEngine;
 public class OrderController : MonoBehaviour
 {
     private Dictionary<string, OrderLine> _currentOrder;
-    [SerializeField] private int _remainingQuantity;
-    
+    private int _remainingQuantity;
     private bool IsOrderCompleted => _remainingQuantity == 0;
     
     private void Start()
@@ -57,11 +56,6 @@ public class OrderController : MonoBehaviour
             _remainingQuantity--;
         }
         
-        foreach (var ol in _currentOrder)
-        {
-            Debug.Log("Ingredient: " + ol.Key + ", Quantity: " + ol.Value.Quantity);
-        }
-
         if (IsOrderCompleted && _currentOrder.Count > 0)
         {
             _currentOrder.Clear();

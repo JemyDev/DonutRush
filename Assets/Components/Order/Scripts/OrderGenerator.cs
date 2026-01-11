@@ -4,7 +4,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 /// <summary>
-/// Handle order generation with a random pick of SO ingredients
+/// Handle order generation with a random pick of Scriptable Object ingredients
 /// </summary>
 public class OrderGenerator : MonoBehaviour
 {
