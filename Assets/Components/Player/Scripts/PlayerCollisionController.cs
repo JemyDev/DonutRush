@@ -34,11 +34,13 @@ public class PlayerCollisionController : MonoBehaviour
                 if (_hitResults[i].CompareTag(WALL_TAG) && !_hasHitWall)
                 {
                     _hasHitWall = true;
+                    GameEventSystem.OnPlayerHit?.Invoke();
                     Debug.Log("Player took damage");
                 }
                 else if (_hitResults[i].CompareTag(DOOR_TAG) && !_hasHitDoor)
                 {
                     _hasHitDoor = true;
+                    GameEventSystem.OnDoorPassed?.Invoke();
                     Debug.Log("Player passed through door");
                 }
             }
