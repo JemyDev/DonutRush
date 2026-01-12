@@ -640,6 +640,74 @@ Transform:
   m_Children: []
   m_Father: {fileID: 698271800}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1768767458
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1768767459}
+  - component: {fileID: 1768767460}
+  - component: {fileID: 1768767461}
+  m_Layer: 0
+  m_Name: OrderGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1768767459
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768767458}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1768767460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768767458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d48ffea8599fe91428fe22dd1b969c1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OrderGenerator
+  _availableIngredients:
+  - {fileID: 11400000, guid: 869b0f7361d5bd743964c0547394cc7f, type: 2}
+  - {fileID: 11400000, guid: 81816abc99dd093419e69d6be06d1ed0, type: 2}
+  - {fileID: 11400000, guid: e4a70a3d18343d54eb394839c69fbdbd, type: 2}
+  - {fileID: 11400000, guid: 29e373dc6543b274abd7050aeca6dc31, type: 2}
+  - {fileID: 11400000, guid: 528388faccefe11478256e74c4ce32e3, type: 2}
+  - {fileID: 11400000, guid: 89e1ba3f0a13b744bafaed198b34e9ff, type: 2}
+  _maxIngredientsPerOrder: 3
+  _minIngredientsPerOrderLine: 1
+  _maxIngredientsPerOrderLine: 5
+--- !u!114 &1768767461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768767458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9821c1511b11f864c9fe4e2ce6e7ebe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OrderController
+  _remainingQuantity: 0
 --- !u!1001 &6286856465277313088
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -739,3 +807,4 @@ SceneRoots:
   - {fileID: 6286856465277313088}
   - {fileID: 698271800}
   - {fileID: 422613801}
+  - {fileID: 1768767459}
