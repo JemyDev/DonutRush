@@ -398,7 +398,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 182154842612109904}
-  - component: {fileID: 8869229346668467202}
+  - component: {fileID: 3054967036055638592}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -425,7 +425,7 @@ Transform:
   - {fileID: 1233153679574129749}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8869229346668467202
+--- !u!114 &3054967036055638592
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -437,3 +437,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bf217e7c0b30db4886d0b1a870dad0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorController
+  _ingredient: {fileID: 0}
+  _wallsMeshRenderer:
+  - {fileID: 7927615987145394553}
+  - {fileID: 6094628303711153424}
+  - {fileID: 7585819270765493292}
