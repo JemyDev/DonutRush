@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -17,9 +18,13 @@ public class OrderGenerator : MonoBehaviour
 
     private void Awake()
     {
+        GameEventSystem.OnOrderCompleted += HandleCompletedOrder;
+    }
+
+    private void Start()
+    {
         // Create a new order on start
         CreateNewOrder();
-        GameEventSystem.OnOrderCompleted += HandleCompletedOrder;
     }
 
     private void OnDestroy()
