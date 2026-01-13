@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,6 +29,13 @@ public class IngredientDistributor : MonoBehaviour
 
     private void HandleDoorInstantiated()
     {
+        // Handle ingredient distribution after a short delay to ensure order is ready
+        StartCoroutine(WaitAndDistributeIngredient());
+    }
+    
+    private IEnumerator WaitAndDistributeIngredient()
+    {
+        yield return new WaitForSeconds(0.1f);
         var randomIndex = Random.Range(0, _currentOrderIngredients.Length);
         GameEventSystem.OnIngredientDistributed?.Invoke(_currentOrderIngredients[randomIndex]);
     }
