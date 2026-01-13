@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: e0654092146b349cdbf2909a9205bca0
+guid: af57cefb9e21e441da779138dfbfc9d1
 AssetOrigin:
   serializedVersion: 1
   productId: 70018
   packageName: Food icons Pack
   packageVersion: 1.0
-  assetPath: Assets/Components/Ingredient/Sprites/coffee.png
+  assetPath: Assets/Food icons Pack/PNG/donuts.png
   uploadId: 133533
 TextureImporter:
   internalIDToNameTable: []
