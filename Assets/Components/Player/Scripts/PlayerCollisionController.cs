@@ -39,8 +39,7 @@ public class PlayerCollisionController : MonoBehaviour
                 else if (_hitResults[i].CompareTag(DOOR_TAG) && !_hasHitDoor)
                 {
                     _hasHitDoor = true;
-                    // TODO: Replace with dynamic ingredient name when multiple ingredients are available
-                    GameEventSystem.OnIngredientCollected?.Invoke("Chocolate");
+                    GameEventSystem.OnDoorPassed?.Invoke(_hitResults[i]);
                 }
             }
         }
