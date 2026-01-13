@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -16,7 +15,7 @@ public class OrderGenerator : MonoBehaviour
     [SerializeField] private int _minIngredientsPerOrderLine = 1;
     [SerializeField] private int _maxIngredientsPerOrderLine = 5;
 
-    private void Start()
+    private void Awake()
     {
         // Create a new order on start
         CreateNewOrder();

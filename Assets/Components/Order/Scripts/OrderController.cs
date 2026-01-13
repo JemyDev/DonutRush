@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +10,7 @@ public class OrderController : MonoBehaviour
     private int _remainingQuantity;
     private bool IsOrderCompleted => _remainingQuantity == 0;
     
-    private void Start()
+    private void Awake()
     {
         GameEventSystem.OnOrderCreated += HandleOrderCreation;
         GameEventSystem.OnIngredientCollected += HandleOrderUpdate;
