@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -5,17 +6,23 @@ using UnityEngine;
 /// </summary>
 public class DoorController : MonoBehaviour
 {
+    [Header("Ingredient Parameter")]
     [SerializeField] private IngredientScriptableObject _ingredient;
+    
+    [Header("Door Prefab Parameters")]
     [SerializeField] private MeshRenderer[] _wallsMeshRenderer;
+    [SerializeField] private Transform _doorTrigger;
 
     private void Awake()
     {
         GameEventSystem.OnIngredientDistributed += AttachIngredient;
+        GameEventSystem.OnDoorPassed += HandleDoorPassed;
     }
 
     private void OnDestroy()
     {
         GameEventSystem.OnIngredientDistributed -= AttachIngredient;
+        GameEventSystem.OnDoorPassed -= HandleDoorPassed;
     }
     
     private void AttachIngredient(IngredientScriptableObject ingredient)
@@ -24,6 +31,14 @@ public class DoorController : MonoBehaviour
         
         _ingredient = ingredient;
         UpdateWallsMaterial();
+    }
+    
+    private void HandleDoorPassed(Collider doorReference)
+    {
+        if (doorReference.gameObject == _doorTrigger.gameObject)
+        {
+            GameEventSystem.OnIngredientCollected?.Invoke(_ingredient.ingredientName);
+        }
     }
     
     private void UpdateWallsMaterial()
