@@ -28,9 +28,9 @@ public class OrderController : MonoBehaviour
         SetCurrentOrder(newOrder);
     }
     
-    private void HandleOrderUpdate(string ingredientName)
+    private void HandleOrderUpdate(IngredientScriptableObject ingredient)
     {
-        UpdateOrderLine(ingredientName);
+        UpdateOrderLine(ingredient.ingredientName);
     }
 
     private void SetCurrentOrder(Dictionary<string, OrderLine> currentOrder)

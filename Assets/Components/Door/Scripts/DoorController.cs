@@ -37,7 +37,7 @@ public class DoorController : MonoBehaviour
     {
         if (doorReference.gameObject == _doorTrigger.gameObject)
         {
-            GameEventSystem.OnIngredientCollected?.Invoke(_ingredient.ingredientName);
+            GameEventSystem.OnIngredientCollected?.Invoke(_ingredient);
         }
     }
     
