@@ -16,11 +16,15 @@ public class OrderGenerator : MonoBehaviour
     [SerializeField] private int _minIngredientsPerOrderLine = 1;
     [SerializeField] private int _maxIngredientsPerOrderLine = 5;
 
+    private void Awake()
+    {
+        GameEventSystem.OnOrderCompleted += HandleCompletedOrder;
+    }
+
     private void Start()
     {
         // Create a new order on start
         CreateNewOrder();
-        GameEventSystem.OnOrderCompleted += HandleCompletedOrder;
     }
 
     private void OnDestroy()
