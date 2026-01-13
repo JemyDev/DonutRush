@@ -5,7 +5,7 @@ AssetOrigin:
   productId: 70018
   packageName: Food icons Pack
   packageVersion: 1.0
-  assetPath: Assets/Food icons Pack/PNG/blueberry.png
+  assetPath: Assets/Components/Ingredient/Sprites/blueberry.png
   uploadId: 133533
 TextureImporter:
   internalIDToNameTable: []
