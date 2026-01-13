@@ -69,6 +69,11 @@ public class ObstacleGenerator : MonoBehaviour
         var newChunk = Instantiate(_chunkPrefabs[newChunkIndex], transform);
         newChunk.transform.position = position;
         _activeChunks.Add(newChunk);
+
+        if (newChunk.HasDoorPrefab)
+        {
+            TriggerDoorEvent();
+        }
     }
 
     private void UpdateChunks()
@@ -102,5 +107,9 @@ public class ObstacleGenerator : MonoBehaviour
             AddNewChunk(LastChunk.EndAnchor.position);
         }
     }
-    
+
+    private static void TriggerDoorEvent()
+    {
+        GameEventSystem.OnDoorInstantiated?.Invoke();
+    }
 }

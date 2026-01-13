@@ -48,6 +48,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4101783732453739026, guid: 49e8e7ca19665784eb9a0af60c3e2c45, type: 3}
+      propertyPath: _doorPrefab
+      value: 
+      objectReference: {fileID: 6055198016481120320}
     - target: {fileID: 4317792575415724125, guid: 49e8e7ca19665784eb9a0af60c3e2c45, type: 3}
       propertyPath: m_Name
       value: ChunkLeftDoor
@@ -122,6 +126,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11a7d7b7ea632f945933e32a33227ed5, type: 3}
+--- !u!114 &6055198016481120320 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3054967036055638592, guid: 11a7d7b7ea632f945933e32a33227ed5, type: 3}
+  m_PrefabInstance: {fileID: 9109953937714053632}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bf217e7c0b30db4886d0b1a870dad0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorController
 --- !u!4 &9001053035100442704 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 182154842612109904, guid: 11a7d7b7ea632f945933e32a33227ed5, type: 3}
