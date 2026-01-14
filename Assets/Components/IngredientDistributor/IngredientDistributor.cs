@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Linq;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -22,9 +21,9 @@ public class IngredientDistributor : MonoBehaviour
         GameEventSystem.OnDoorInstantiated -= HandleDoorInstantiated;
     }
     
-    private void HandleIngredientDistribution(Dictionary<string, OrderLine> order)
+    private void HandleIngredientDistribution(Order order)
     {
-        _currentOrderIngredients = order.Values.Select(ol => ol.Ingredient).ToArray();
+        _currentOrderIngredients = order.OrderLines.Values.Select(ol => ol.Ingredient).ToArray();
     }
 
     private void HandleDoorInstantiated()

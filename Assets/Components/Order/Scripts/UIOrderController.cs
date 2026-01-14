@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 /// <summary>
@@ -6,27 +6,34 @@ using UnityEngine;
 /// </summary>
 public class UIOrderController : MonoBehaviour
 {
-    [Header("UI Prefab")]
+    [Header("UI Elements")]
     [SerializeField] private UIOrderLineController _orderLinePrefab;
+    [SerializeField] private TMP_Text _totalText;
+
+    private int _totalCalories = 0;
     
     private void Awake()
     {
         GameEventSystem.OnOrderCreated += HandleOrderCreated;
+        GameEventSystem.OnIngredientCollected += HandleTotalCaloriesUpdate;
     }
 
     private void OnDestroy()
     {
         GameEventSystem.OnOrderCreated -= HandleOrderCreated;
+        GameEventSystem.OnIngredientCollected -= HandleTotalCaloriesUpdate;
     }
 
-    private void HandleOrderCreated(Dictionary<string, OrderLine> orderLines)
+    private void HandleOrderCreated(Order order)
     {
         ClearExistingOrderLines();
 
-        foreach (var orderLine in orderLines)
+        foreach (var orderLine in order.OrderLines)
         {
             CreateOrderLineUI(orderLine.Value);
         }
+        
+        UpdateTotalCalories(order.TotalCalories);
     }
     
     private void ClearExistingOrderLines()
@@ -41,5 +48,16 @@ public class UIOrderController : MonoBehaviour
     {
         var orderLineUI = Instantiate(_orderLinePrefab, transform);
         orderLineUI.AddSprite(orderLine.Ingredient.ingredientSprite);
+    }
+    
+    private void UpdateTotalCalories(int caloriesToAdd)
+    {
+        _totalCalories += caloriesToAdd;
+        _totalText.text = _totalCalories.ToString();
+    }
+    
+    private void HandleTotalCaloriesUpdate(IngredientScriptableObject ingredient)
+    {
+        UpdateTotalCalories(-ingredient.ingredientScore);
     }
 }
