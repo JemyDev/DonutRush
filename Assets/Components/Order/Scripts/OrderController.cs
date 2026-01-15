@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -6,7 +5,7 @@ using UnityEngine;
 /// </summary>
 public class OrderController : MonoBehaviour
 {
-    private Dictionary<string, OrderLine> _currentOrder;
+    private Order _currentOrder;
     private int _remainingQuantity;
     private bool IsOrderCompleted => _remainingQuantity == 0;
     
@@ -22,10 +21,9 @@ public class OrderController : MonoBehaviour
         GameEventSystem.OnIngredientCollected -= HandleOrderUpdate;
     }
 
-    private void HandleOrderCreation(Dictionary<string, OrderLine> orderLines)
+    private void HandleOrderCreation(Order order)
     {
-        var newOrder = new Dictionary<string, OrderLine>(orderLines);
-        SetCurrentOrder(newOrder);
+        SetCurrentOrder(order);
     }
     
     private void HandleOrderUpdate(IngredientScriptableObject ingredient)
@@ -33,12 +31,12 @@ public class OrderController : MonoBehaviour
         UpdateOrderLine(ingredient.ingredientName);
     }
 
-    private void SetCurrentOrder(Dictionary<string, OrderLine> currentOrder)
+    private void SetCurrentOrder(Order currentOrder)
     {
         _currentOrder = currentOrder;
         _remainingQuantity = 0;
         
-        foreach (var orderLine in _currentOrder)
+        foreach (var orderLine in _currentOrder.OrderLines)
         {
             _remainingQuantity += orderLine.Value.Quantity;
         }
@@ -46,18 +44,18 @@ public class OrderController : MonoBehaviour
 
     private void UpdateOrderLine(string ingredientName)
     {
-        if (_currentOrder == null) return;
+        if (_currentOrder.OrderLines == null) return;
         
-        if (_currentOrder.TryGetValue(ingredientName, out var orderLine) && orderLine.Quantity > 0)
+        if (_currentOrder.OrderLines.TryGetValue(ingredientName, out var orderLine) && orderLine.Quantity > 0)
         {
             orderLine.Quantity--;
-            _currentOrder[ingredientName] = orderLine;
+            _currentOrder.OrderLines[ingredientName] = orderLine;
             _remainingQuantity--;
         }
         
-        if (IsOrderCompleted && _currentOrder.Count > 0)
+        if (IsOrderCompleted && _currentOrder.OrderLines.Count > 0)
         {
-            _currentOrder.Clear();
+            _currentOrder.OrderLines.Clear();
             GameEventSystem.OnOrderCompleted?.Invoke();
         }
     }

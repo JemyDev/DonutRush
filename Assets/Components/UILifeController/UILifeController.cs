@@ -10,7 +10,7 @@ public class UILifeController : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private int _startLife = 3;
     
-    [Header("Life Point Prefab")]
+    [Header("UI Prefab")]
     [SerializeField] private Image _lifePointPrefab;
 
     private readonly List<Image> _currentLifePoints = new();

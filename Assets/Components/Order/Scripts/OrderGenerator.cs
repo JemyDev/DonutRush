@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -38,7 +38,7 @@ public class OrderGenerator : MonoBehaviour
         GameEventSystem.OnOrderCreated?.Invoke(newOrder);
     }
 
-    private Dictionary<string, OrderLine> GenerateOrder()
+    private Order GenerateOrder()
     {
         var newOrderLines = new Dictionary<string, OrderLine>();
         
@@ -53,8 +53,11 @@ public class OrderGenerator : MonoBehaviour
             var orderLine = new OrderLine(ingredient, quantity);
             newOrderLines.Add(ingredient.ingredientName, orderLine);
         }
+        
+        var totalOrderCalories = newOrderLines.Values.Sum(ol => ol.Quantity * ol.Ingredient.ingredientScore);
+        var newOrder = new Order(newOrderLines, totalOrderCalories);
 
-        return newOrderLines;
+        return newOrder;
     }
 
     private void HandleCompletedOrder()
