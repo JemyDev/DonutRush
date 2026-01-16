@@ -10,7 +10,8 @@ public class UIOrderController : MonoBehaviour
     [SerializeField] private UIOrderLineController _orderLinePrefab;
     [SerializeField] private TMP_Text _totalText;
 
-    private int _totalCalories = 0;
+    private Order _currentOrder;
+    private int TotalOrderCalories => _currentOrder.TotalCalories;
     
     private void Awake()
     {
@@ -32,8 +33,9 @@ public class UIOrderController : MonoBehaviour
         {
             CreateOrderLineUI(orderLine.Value);
         }
-        
-        UpdateTotalCalories(order.TotalCalories);
+
+        _currentOrder = order;
+        UpdateTotalCalories();
     }
     
     private void ClearExistingOrderLines()
@@ -50,14 +52,13 @@ public class UIOrderController : MonoBehaviour
         orderLineUI.AddSprite(orderLine.Ingredient.ingredientSprite);
     }
     
-    private void UpdateTotalCalories(int caloriesToAdd)
+    private void UpdateTotalCalories()
     {
-        _totalCalories += caloriesToAdd;
-        _totalText.text = _totalCalories.ToString();
+        _totalText.text = TotalOrderCalories.ToString();
     }
     
     private void HandleTotalCaloriesUpdate(IngredientScriptableObject ingredient)
     {
-        UpdateTotalCalories(-ingredient.ingredientScore);
+        UpdateTotalCalories();
     }
 }

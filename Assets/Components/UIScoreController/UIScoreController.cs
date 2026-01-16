@@ -14,17 +14,17 @@ public class UIScoreController : MonoBehaviour
     private void Start()
     {
         SetScore(_currentScore);
-        GameEventSystem.OnIngredientCollected += HandleIngredientCollected;
+        GameEventSystem.OnOrderCompleted += HandleOrderCompleted;
     }
 
     private void OnDestroy()
     {
-        GameEventSystem.OnIngredientCollected -= HandleIngredientCollected;
+        GameEventSystem.OnOrderCompleted -= HandleOrderCompleted;
     }
 
-    private void HandleIngredientCollected(IngredientScriptableObject ingredient)
+    private void HandleOrderCompleted(int scoreToAdd)
     {
-        SetScore(ingredient.ingredientScore);
+        SetScore(scoreToAdd);
     }
     
     private void SetScore(int scoreToAdd)
