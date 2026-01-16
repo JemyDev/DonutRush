@@ -6,8 +6,8 @@ using UnityEngine;
 public class OrderController : MonoBehaviour
 {
     private Order _currentOrder;
-    private int _remainingQuantity;
-    private bool IsOrderCompleted => _remainingQuantity == 0;
+    private bool IsOrderCompleted => _currentOrder.TotalCalories == 0;
+    private int _scoreToAdd;
     
     private void Awake()
     {
@@ -34,12 +34,7 @@ public class OrderController : MonoBehaviour
     private void SetCurrentOrder(Order currentOrder)
     {
         _currentOrder = currentOrder;
-        _remainingQuantity = 0;
-        
-        foreach (var orderLine in _currentOrder.OrderLines)
-        {
-            _remainingQuantity += orderLine.Value.Quantity;
-        }
+        _scoreToAdd = _currentOrder.TotalCalories;
     }
 
     private void UpdateOrderLine(string ingredientName)
@@ -48,15 +43,14 @@ public class OrderController : MonoBehaviour
         
         if (_currentOrder.OrderLines.TryGetValue(ingredientName, out var orderLine) && orderLine.Quantity > 0)
         {
-            orderLine.Quantity--;
+            orderLine.DecreaseQuantity();
             _currentOrder.OrderLines[ingredientName] = orderLine;
-            _remainingQuantity--;
         }
         
         if (IsOrderCompleted && _currentOrder.OrderLines.Count > 0)
         {
             _currentOrder.OrderLines.Clear();
-            GameEventSystem.OnOrderCompleted?.Invoke();
+            GameEventSystem.OnOrderCompleted?.Invoke(_scoreToAdd);
         }
     }
 }

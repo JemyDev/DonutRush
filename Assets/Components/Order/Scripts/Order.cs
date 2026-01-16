@@ -1,14 +1,14 @@
 using System.Collections.Generic;
+using System.Linq;
 
-public struct Order
+public readonly struct Order
 {
 
-    public Order(Dictionary<string, OrderLine> orderLines, int totalCalories)
+    public Order(Dictionary<string, OrderLine> orderLines)
     {
         OrderLines = new Dictionary<string, OrderLine>(orderLines);
-        TotalCalories = totalCalories;
     }
     
-    public Dictionary<string, OrderLine> OrderLines;
-    public int TotalCalories;
+    public readonly Dictionary<string, OrderLine> OrderLines;
+    public int TotalCalories => OrderLines.Values.Sum(orderLine => orderLine.TotalScoreByLine);
 }

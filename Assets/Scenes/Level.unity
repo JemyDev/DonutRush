@@ -594,6 +594,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IngredientDistributor
   _currentOrderIngredients: []
+  _defaultIngredientsList:
+  - {fileID: 11400000, guid: 869b0f7361d5bd743964c0547394cc7f, type: 2}
+  - {fileID: 11400000, guid: 81816abc99dd093419e69d6be06d1ed0, type: 2}
+  - {fileID: 11400000, guid: e4a70a3d18343d54eb394839c69fbdbd, type: 2}
+  - {fileID: 11400000, guid: 29e373dc6543b274abd7050aeca6dc31, type: 2}
+  - {fileID: 11400000, guid: 528388faccefe11478256e74c4ce32e3, type: 2}
+  - {fileID: 11400000, guid: 89e1ba3f0a13b744bafaed198b34e9ff, type: 2}
 --- !u!4 &1137908349
 Transform:
   m_ObjectHideFlags: 0
