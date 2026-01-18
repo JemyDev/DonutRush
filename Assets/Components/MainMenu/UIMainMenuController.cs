@@ -1,9 +1,14 @@
 using UnityEngine;
 
-public class UIMainMenuController : MonoBehaviour
+public class UIMainMenuController : MonoBehaviour, IDataService
 {
     public void PlayGame()
     {
+        // Save total ingredients collected
+        var saveData = GetSaveData();
+        saveData.RunCount++;
+        Save(saveData);
+
         SceneLoaderService.LoadLevel();
     }
 
@@ -14,5 +19,20 @@ public class UIMainMenuController : MonoBehaviour
         #else
             Application.Quit();
         #endif
+    }
+
+    public SaveData GetSaveData()
+    {
+        if (!SaveService.TryLoad(out var saveData))
+        {
+            saveData = new SaveData();
+        }
+
+        return saveData;
+    }
+
+    public void Save(SaveData saveData)
+    {
+        SaveService.Save(saveData);
     }
 }
