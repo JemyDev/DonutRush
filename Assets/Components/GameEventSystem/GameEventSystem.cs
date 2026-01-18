@@ -12,3 +12,4 @@ public static class GameEventSystem
     public static Action<IngredientScriptableObject> OnIngredientDistributed;
     public static Action OnGameOver;
 }
+

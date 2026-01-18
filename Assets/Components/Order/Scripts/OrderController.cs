@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// Handle current order and updates it
 /// </summary>
-public class OrderController : MonoBehaviour
+public class OrderController : MonoBehaviour, IDataService
 {
     private Order _currentOrder;
     private bool IsOrderCompleted => _currentOrder.TotalCalories == 0;
@@ -45,6 +45,11 @@ public class OrderController : MonoBehaviour
         {
             orderLine.DecreaseQuantity();
             _currentOrder.OrderLines[ingredientName] = orderLine;
+            
+            // Save total ingredients collected
+            var saveData = GetSaveData();
+            saveData.TotalIngredientsCollected++;
+            Save(saveData);
         }
         
         if (IsOrderCompleted && _currentOrder.OrderLines.Count > 0)
@@ -52,5 +57,20 @@ public class OrderController : MonoBehaviour
             _currentOrder.OrderLines.Clear();
             GameEventSystem.OnOrderCompleted?.Invoke(_scoreToAdd);
         }
+    }
+
+    public SaveData GetSaveData()
+    {
+        if (!SaveService.TryLoad(out var saveData))
+        {
+            saveData = new SaveData();
+        }
+
+        return saveData;
+    }
+
+    public void Save(SaveData saveData)
+    {
+        SaveService.Save(saveData);
     }
 }
