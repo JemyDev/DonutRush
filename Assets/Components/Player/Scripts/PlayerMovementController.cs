@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -35,6 +36,7 @@ public class PlayerMovementController : MonoBehaviour
     private void Start()
     {
         _currentPositionY = transform.position.y;
+        GameEventSystem.OnGameOver += HandleGameOver;
     }
 
     private void OnEnable()
@@ -51,6 +53,19 @@ public class PlayerMovementController : MonoBehaviour
         _moveActionReference.action.Disable();
         _jumpActionReference.action.performed -= OnJump;
         _jumpActionReference.action.Disable();
+    }
+
+    private void OnDestroy()
+    {
+        GameEventSystem.OnGameOver -= HandleGameOver;
+    }
+    
+    private void HandleGameOver()
+    {
+        _isMoving = false;
+        _isJumping = false;
+        _animator.enabled = false;
+        StopAllCoroutines();
     }
 
     private void OnMove(InputAction.CallbackContext context)
