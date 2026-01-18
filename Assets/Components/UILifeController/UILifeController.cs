@@ -39,12 +39,16 @@ public class UILifeController : MonoBehaviour
     private void HandleCollision()
     {
         UpdateLife();
+        
+        if (CurrentLife <= 0)
+        {
+            GameEventSystem.OnGameOver?.Invoke();
+        }
+        
     }
 
     private void UpdateLife()
     {
-        if (CurrentLife == 0) return;
-        
         var lastLifePointIndex = CurrentLife - 1;
         var lifePointToRemove = _currentLifePoints[lastLifePointIndex];
         _currentLifePoints.RemoveAt(lastLifePointIndex);
