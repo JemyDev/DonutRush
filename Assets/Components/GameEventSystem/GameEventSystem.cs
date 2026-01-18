@@ -10,4 +10,5 @@ public static class GameEventSystem
     public static Action<int> OnOrderCompleted;
     public static Action OnDoorInstantiated;
     public static Action<IngredientScriptableObject> OnIngredientDistributed;
+    public static Action OnGameOver;
 }
