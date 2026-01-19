@@ -23,7 +23,7 @@ public class ObstacleSpeedController : MonoBehaviour
     private void UpdateObstacleSpeed(int score)
     {
         
-        ++_completedOrders;
+        _completedOrders++;
 
         var newSpeed = _baseSpeed + _speedIncrement * Mathf.Sqrt(_completedOrders);
         newSpeed = Mathf.Min(newSpeed, _maxSpeed);
