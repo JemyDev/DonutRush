@@ -14,7 +14,7 @@ public class PlayerCollisionController : MonoBehaviour
     [SerializeField] private bool _hasHitWall;
     [SerializeField] private bool _hasHitDoor;
     
-    private readonly Collider[] _hitResults = new Collider[2];
+    private readonly Collider[] _hitResults = new Collider[1];
     private const string WALL_TAG = "Wall";
     private const string DOOR_TAG = "Door";
     
