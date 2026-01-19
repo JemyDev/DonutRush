@@ -17,8 +17,9 @@ public class ObstacleGenerator : MonoBehaviour
 
     private readonly List<ChunkController> _activeChunks = new();
     private ChunkController LastChunk => _activeChunks[^1];
-
     private int _lastChunkIndex = 0;
+    
+    public float TranslationSpeed => _translationSpeed;
 
     private void Start()
     {
@@ -122,5 +123,10 @@ public class ObstacleGenerator : MonoBehaviour
     private static void TriggerDoorEvent()
     {
         GameEventSystem.OnDoorInstantiated?.Invoke();
+    }
+    
+    public void IncreaseTranslationSpeed(float newSpeed)
+    {
+        _translationSpeed = newSpeed;
     }
 }
