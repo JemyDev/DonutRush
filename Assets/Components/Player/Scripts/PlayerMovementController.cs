@@ -36,7 +36,7 @@ public class PlayerMovementController : MonoBehaviour
     private void Start()
     {
         _currentPositionY = transform.position.y;
-        GameEventSystem.OnGameOver += HandleGameOver;
+        GameEventService.OnGameOver += HandleGameOver;
     }
 
     private void OnEnable()
@@ -57,7 +57,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameEventSystem.OnGameOver -= HandleGameOver;
+        GameEventService.OnGameOver -= HandleGameOver;
     }
     
     private void HandleGameOver()

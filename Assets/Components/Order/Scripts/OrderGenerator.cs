@@ -17,7 +17,7 @@ public class OrderGenerator : MonoBehaviour
 
     private void Awake()
     {
-        GameEventSystem.OnOrderCompleted += HandleCompletedOrder;
+        GameEventService.OnOrderCompleted += HandleCompletedOrder;
     }
 
     private void Start()
@@ -28,13 +28,13 @@ public class OrderGenerator : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameEventSystem.OnOrderCompleted -= HandleCompletedOrder;
+        GameEventService.OnOrderCompleted -= HandleCompletedOrder;
     }
     
     private void CreateNewOrder()
     {
         var newOrder = GenerateOrder();
-        GameEventSystem.OnOrderCreated?.Invoke(newOrder);
+        GameEventService.OnOrderCreated?.Invoke(newOrder);
     }
 
     private Order GenerateOrder()

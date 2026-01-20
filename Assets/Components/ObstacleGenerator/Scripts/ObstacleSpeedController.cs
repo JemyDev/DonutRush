@@ -9,15 +9,15 @@ public class ObstacleSpeedController : MonoBehaviour
     private float _completedOrders = 0;
     private float _baseSpeed;
 
-    void Start()
+    private void Start()
     {
         _baseSpeed = _obstacleGenerator.TranslationSpeed;
-        GameEventSystem.OnOrderCompleted += UpdateObstacleSpeed;
+        GameEventService.OnOrderCompleted += UpdateObstacleSpeed;
     }
     
     private void OnDestroy()
     {
-        GameEventSystem.OnOrderCompleted -= UpdateObstacleSpeed;
+        GameEventService.OnOrderCompleted -= UpdateObstacleSpeed;
     }
 
     private void UpdateObstacleSpeed(int score)

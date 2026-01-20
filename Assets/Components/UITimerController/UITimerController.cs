@@ -10,14 +10,14 @@ public class UITimerController : MonoBehaviour
 
     private void Start()
     {
-        GameEventSystem.OnOrderCompleted += ResetTimer;
-        GameEventSystem.OnGameOver += HandleGameOver;
+        GameEventService.OnOrderCompleted += ResetTimer;
+        GameEventService.OnGameOver += HandleGameOver;
     }
 
     private void OnDestroy()
     {
-        GameEventSystem.OnOrderCompleted -= ResetTimer;
-        GameEventSystem.OnGameOver -= HandleGameOver;
+        GameEventService.OnOrderCompleted -= ResetTimer;
+        GameEventService.OnGameOver -= HandleGameOver;
     }
     
     private void HandleGameOver()
