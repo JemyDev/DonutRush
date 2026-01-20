@@ -11,14 +11,14 @@ public class OrderController : MonoBehaviour, IDataService
     
     private void Awake()
     {
-        GameEventSystem.OnOrderCreated += HandleOrderCreation;
-        GameEventSystem.OnIngredientCollected += HandleOrderUpdate;
+        GameEventService.OnOrderCreated += HandleOrderCreation;
+        GameEventService.OnIngredientCollected += HandleOrderUpdate;
     }
 
     private void OnDestroy()
     {
-        GameEventSystem.OnOrderCreated -= HandleOrderCreation;
-        GameEventSystem.OnIngredientCollected -= HandleOrderUpdate;
+        GameEventService.OnOrderCreated -= HandleOrderCreation;
+        GameEventService.OnIngredientCollected -= HandleOrderUpdate;
     }
 
     private void HandleOrderCreation(Order order)
@@ -55,7 +55,7 @@ public class OrderController : MonoBehaviour, IDataService
         if (IsOrderCompleted && _currentOrder.OrderLines.Count > 0)
         {
             _currentOrder.OrderLines.Clear();
-            GameEventSystem.OnOrderCompleted?.Invoke(_scoreToAdd);
+            GameEventService.OnOrderCompleted?.Invoke(_scoreToAdd);
         }
     }
 

@@ -24,12 +24,12 @@ public class ObstacleGenerator : MonoBehaviour
     private void Start()
     {
         AddBaseChunk();
-        GameEventSystem.OnGameOver += HandleGameOver;
+        GameEventService.OnGameOver += HandleGameOver;
     }
     
     private void OnDestroy()
     {
-        GameEventSystem.OnGameOver -= HandleGameOver;
+        GameEventService.OnGameOver -= HandleGameOver;
     }
 
     private void Update()
@@ -122,7 +122,7 @@ public class ObstacleGenerator : MonoBehaviour
 
     private static void TriggerDoorEvent()
     {
-        GameEventSystem.OnDoorInstantiated?.Invoke();
+        GameEventService.OnDoorInstantiated?.Invoke();
     }
     
     public void IncreaseTranslationSpeed(float newSpeed)

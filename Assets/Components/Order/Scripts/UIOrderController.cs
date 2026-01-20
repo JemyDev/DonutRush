@@ -15,14 +15,14 @@ public class UIOrderController : MonoBehaviour
     
     private void Awake()
     {
-        GameEventSystem.OnOrderCreated += HandleOrderCreated;
-        GameEventSystem.OnIngredientCollected += HandleTotalCaloriesUpdate;
+        GameEventService.OnOrderCreated += HandleOrderCreated;
+        GameEventService.OnIngredientCollected += HandleTotalCaloriesUpdate;
     }
 
     private void OnDestroy()
     {
-        GameEventSystem.OnOrderCreated -= HandleOrderCreated;
-        GameEventSystem.OnIngredientCollected -= HandleTotalCaloriesUpdate;
+        GameEventService.OnOrderCreated -= HandleOrderCreated;
+        GameEventService.OnIngredientCollected -= HandleTotalCaloriesUpdate;
     }
 
     private void HandleOrderCreated(Order order)

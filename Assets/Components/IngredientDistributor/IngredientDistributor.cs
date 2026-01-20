@@ -11,14 +11,14 @@ public class IngredientDistributor : MonoBehaviour
     
     private void Awake()
     {
-        GameEventSystem.OnOrderCreated += HandleIngredientDistribution;
-        GameEventSystem.OnDoorInstantiated += HandleDoorInstantiated;
+        GameEventService.OnOrderCreated += HandleIngredientDistribution;
+        GameEventService.OnDoorInstantiated += HandleDoorInstantiated;
     }
 
     private void OnDestroy()
     {
-        GameEventSystem.OnOrderCreated -= HandleIngredientDistribution;
-        GameEventSystem.OnDoorInstantiated -= HandleDoorInstantiated;
+        GameEventService.OnOrderCreated -= HandleIngredientDistribution;
+        GameEventService.OnDoorInstantiated -= HandleDoorInstantiated;
     }
     
     private void HandleIngredientDistribution(Order order)
@@ -35,6 +35,6 @@ public class IngredientDistributor : MonoBehaviour
         }
         
         var randomIndex = Random.Range(0, _currentOrderIngredients.Length);
-        GameEventSystem.OnIngredientDistributed?.Invoke(_currentOrderIngredients[randomIndex]);
+        GameEventService.OnIngredientDistributed?.Invoke(_currentOrderIngredients[randomIndex]);
     }
 }

@@ -9,7 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7614762196317132362}
-  - component: {fileID: 7759008477595665932}
+  - component: {fileID: 8340778890932567567}
+  - component: {fileID: 824578187688695513}
+  - component: {fileID: 7763528181330497019}
   - component: {fileID: 8500353739562509890}
   - component: {fileID: 8118808031423516956}
   m_Layer: 0
@@ -37,7 +39,7 @@ Transform:
   - {fileID: 6612367103025658980}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7759008477595665932
+--- !u!114 &8340778890932567567
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,11 +48,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 1310883028453252501}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9059e8e4aa693b2488a9f3ce6aec2208, type: 3}
+  m_Script: {fileID: 11500000, guid: c28b1a69f4be4d1585a87f7647bacbb4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementController
+  m_EditorClassIdentifier: Assembly-CSharp::Components.Player.Scripts.PlayerInputHandler
   _moveActionReference: {fileID: 0}
   _jumpActionReference: {fileID: 0}
+--- !u!114 &824578187688695513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310883028453252501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24b76d4dbcbb4f049719a11f82e7203a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Components.Player.Scripts.PlayerMoveController
+  _maxSpeed: 10
+  _smoothTime: 0.05
+--- !u!114 &7763528181330497019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310883028453252501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b80959cf97de4f17b590ee7a2cfc834c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Components.Player.Scripts.PlayerJumpController
   _jumpDuration: 1
   _jumpHeight: 1
   _jumpCurve:
@@ -91,7 +119,7 @@ MonoBehaviour:
       outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 0.05
+      value: 0
       inSlope: -2.5857549
       outSlope: -2.5857549
       tangentMode: 0
@@ -101,11 +129,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _moveSpeed: 0.1
-  _moveTargets:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   _animator: {fileID: 8118808031423516956}
 --- !u!114 &8500353739562509890
 MonoBehaviour:
@@ -121,8 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCollisionController
   _boxCenter: {x: 0, y: 0, z: 0}
   _boxHalfSize: {x: 0.24, y: 0.1, z: 0.24}
-  _hasHitWall: 0
-  _hasHitDoor: 0
+  _isInvulnerable: 0
 --- !u!95 &8118808031423516956
 Animator:
   serializedVersion: 7
@@ -171,7 +193,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f34ae692d9e3a496d9ca0a656eccdf92, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f34ae692d9e3a496d9ca0a656eccdf92, type: 3}
       propertyPath: m_LocalPosition.z
@@ -245,7 +267,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b43527da37e804564bb51165f4d208eb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b43527da37e804564bb51165f4d208eb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -283,6 +305,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: sprinkles_glaze
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b43527da37e804564bb51165f4d208eb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -319,7 +345,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1ad2974e6a1bc4a6e9fa43c08e0f6baf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1ad2974e6a1bc4a6e9fa43c08e0f6baf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -356,6 +382,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 1ad2974e6a1bc4a6e9fa43c08e0f6baf, type: 3}
       propertyPath: m_Name
       value: glaze
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1ad2974e6a1bc4a6e9fa43c08e0f6baf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

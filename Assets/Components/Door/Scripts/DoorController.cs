@@ -14,14 +14,14 @@ public class DoorController : MonoBehaviour
 
     private void Awake()
     {
-        GameEventSystem.OnIngredientDistributed += AttachIngredient;
-        GameEventSystem.OnDoorPassed += HandleDoorPassed;
+        GameEventService.OnIngredientDistributed += AttachIngredient;
+        GameEventService.OnPlayerTriggerDoorPassed += HandleDoorPassed;
     }
 
     private void OnDestroy()
     {
-        GameEventSystem.OnIngredientDistributed -= AttachIngredient;
-        GameEventSystem.OnDoorPassed -= HandleDoorPassed;
+        GameEventService.OnIngredientDistributed -= AttachIngredient;
+        GameEventService.OnPlayerTriggerDoorPassed -= HandleDoorPassed;
     }
     
     private void AttachIngredient(IngredientScriptableObject ingredient)
@@ -36,7 +36,7 @@ public class DoorController : MonoBehaviour
     {
         if (doorReference.gameObject == _doorTrigger.gameObject)
         {
-            GameEventSystem.OnIngredientCollected?.Invoke(_ingredient);
+            GameEventService.OnIngredientCollected?.Invoke(_ingredient);
         }
     }
     

@@ -14,14 +14,14 @@ public class UIScoreController : MonoBehaviour, IDataService
     private void Start()
     {
         SetScore(_currentScore);
-        GameEventSystem.OnOrderCompleted += HandleOrderCompleted;
-        GameEventSystem.OnGameOver += HandleGameOver;
+        GameEventService.OnOrderCompleted += HandleOrderCompleted;
+        GameEventService.OnGameOver += HandleGameOver;
     }
 
     private void OnDestroy()
     {
-        GameEventSystem.OnOrderCompleted -= HandleOrderCompleted;
-        GameEventSystem.OnGameOver -= HandleGameOver;
+        GameEventService.OnOrderCompleted -= HandleOrderCompleted;
+        GameEventService.OnGameOver -= HandleGameOver;
     }
 
     private void HandleOrderCompleted(int scoreToAdd)

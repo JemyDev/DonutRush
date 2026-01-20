@@ -19,12 +19,12 @@ public class UILifeController : MonoBehaviour
     private void Start()
     {
         SetBaseLife();
-        GameEventSystem.OnPlayerCollision += HandleCollision;
+        GameEventService.OnPlayerCollision += HandleCollision;
     }
 
     private void OnDestroy()
     {
-        GameEventSystem.OnPlayerCollision -= HandleCollision;
+        GameEventService.OnPlayerCollision -= HandleCollision;
     }
 
     private void SetBaseLife()
@@ -42,7 +42,7 @@ public class UILifeController : MonoBehaviour
         
         if (CurrentLife <= 0)
         {
-            GameEventSystem.OnGameOver?.Invoke();
+            GameEventService.OnGameOver?.Invoke();
         }
         
     }
