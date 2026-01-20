@@ -65,7 +65,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24b76d4dbcbb4f049719a11f82e7203a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Components.Player.Scripts.PlayerMoveController
-  _moveSpeed: 0.1
+  _maxSpeed: 10
+  _smoothTime: 0.05
 --- !u!114 &7763528181330497019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,8 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCollisionController
   _boxCenter: {x: 0, y: 0, z: 0}
   _boxHalfSize: {x: 0.24, y: 0.1, z: 0.24}
-  _hasHitWall: 0
-  _hasHitDoor: 0
+  _isInvulnerable: 0
 --- !u!95 &8118808031423516956
 Animator:
   serializedVersion: 7

@@ -11,11 +11,10 @@ namespace Components.Player.Scripts
         [SerializeField] private Vector3 _boxCenter;
         [SerializeField] private Vector3 _boxHalfSize;
 
-        [Header("Invulnerability Parameters")] [SerializeField]
-        private bool _hasHitWall;
-
-        [SerializeField] private bool _hasHitDoor;
-
+        [Header("Invulnerability Parameters")]
+        [SerializeField] private bool _isInvulnerable;
+        
+        private bool _hasTriggeredDoor;
         private readonly Collider[] _hitResults = new Collider[1];
         private const string WALL_TAG = "Wall";
         private const string DOOR_TAG = "Door";
@@ -26,29 +25,33 @@ namespace Components.Player.Scripts
             var animatedCenter = transform.TransformPoint(_boxCenter);
             var hitCount = Physics.OverlapBoxNonAlloc(animatedCenter, animatedBoxHalfSize, _hitResults);
 
-            if (hitCount > 0)
+            switch (hitCount)
             {
-                for (var i = 0; i < hitCount; i++)
+                case > 0:
                 {
-                    if (!_hitResults[i])
-                        continue;
+                    for (var i = 0; i < hitCount; i++)
+                    {
+                        if (!_hitResults[i])
+                            continue;
 
-                    if (_hitResults[i].CompareTag(WALL_TAG) && !_hasHitWall)
-                    {
-                        _hasHitWall = true;
-                        GameEventService.OnPlayerCollision?.Invoke();
+                        if (_hitResults[i].CompareTag(WALL_TAG) && !_isInvulnerable)
+                        {
+                            _isInvulnerable = true;
+                            GameEventService.OnPlayerCollision?.Invoke();
+                        }
+                        else if (_hitResults[i].CompareTag(DOOR_TAG) && !_hasTriggeredDoor)
+                        {
+                            _hasTriggeredDoor = true;
+                            GameEventService.OnPlayerTriggerDoorPassed?.Invoke(_hitResults[i]);
+                        }
                     }
-                    else if (_hitResults[i].CompareTag(DOOR_TAG) && !_hasHitDoor)
-                    {
-                        _hasHitDoor = true;
-                        GameEventService.OnPlayerTriggerDoorPassed?.Invoke(_hitResults[i]);
-                    }
+
+                    break;
                 }
-            }
-            else if (hitCount == 0)
-            {
-                _hasHitWall = false;
-                _hasHitDoor = false;
+                case 0:
+                    _isInvulnerable = false;
+                    _hasTriggeredDoor = false;
+                    break;
             }
         }
 
