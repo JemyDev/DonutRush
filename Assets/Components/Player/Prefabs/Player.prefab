@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7614762196317132362}
+  - component: {fileID: 8340778890932567567}
+  - component: {fileID: 824578187688695513}
+  - component: {fileID: 7763528181330497019}
   - component: {fileID: 8500353739562509890}
   - component: {fileID: 8118808031423516956}
-  - component: {fileID: 8340778890932567567}
-  - component: {fileID: 7763528181330497019}
-  - component: {fileID: 824578187688695513}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -39,44 +39,6 @@ Transform:
   - {fileID: 6612367103025658980}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8500353739562509890
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1310883028453252501}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb081760f687f6f4faeaebcb1eb5ade9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerCollisionController
-  _boxCenter: {x: 0, y: 0, z: 0}
-  _boxHalfSize: {x: 0.24, y: 0.1, z: 0.24}
-  _hasHitWall: 0
-  _hasHitDoor: 0
---- !u!95 &8118808031423516956
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1310883028453252501}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 35bf1a16eaaf5e147bbe14ea94000dbc, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &8340778890932567567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,6 +53,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Components.Player.Scripts.PlayerInputHandler
   _moveActionReference: {fileID: 0}
   _jumpActionReference: {fileID: 0}
+--- !u!114 &824578187688695513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310883028453252501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24b76d4dbcbb4f049719a11f82e7203a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Components.Player.Scripts.PlayerMoveController
+  _moveSpeed: 0.1
 --- !u!114 &7763528181330497019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,7 +129,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _animator: {fileID: 8118808031423516956}
---- !u!114 &824578187688695513
+--- !u!114 &8500353739562509890
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,10 +138,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 1310883028453252501}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24b76d4dbcbb4f049719a11f82e7203a, type: 3}
+  m_Script: {fileID: 11500000, guid: eb081760f687f6f4faeaebcb1eb5ade9, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Components.Player.Scripts.PlayerMoveController
-  _moveSpeed: 0.1
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCollisionController
+  _boxCenter: {x: 0, y: 0, z: 0}
+  _boxHalfSize: {x: 0.24, y: 0.1, z: 0.24}
+  _hasHitWall: 0
+  _hasHitDoor: 0
+--- !u!95 &8118808031423516956
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310883028453252501}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 35bf1a16eaaf5e147bbe14ea94000dbc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &2506374987240261946
 PrefabInstance:
   m_ObjectHideFlags: 0
