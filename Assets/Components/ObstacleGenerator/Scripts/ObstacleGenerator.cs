@@ -18,23 +18,26 @@ public class ObstacleGenerator : MonoBehaviour
 
     private readonly List<ChunkController> _activeChunks = new();
     private ChunkController LastChunk => _activeChunks[^1];
-    private int _lastChunkIndex = 0;
-    
+    private int _lastChunkIndex;
+    private bool _enabled;
     public float TranslationSpeed => _translationSpeed;
 
     private void Start()
     {
         AddBaseChunk();
-        GameEventService.OnGameOver += HandleGameOver;
+        GameEventService.OnGameState += HandleGameState;
     }
     
     private void OnDestroy()
     {
-        GameEventService.OnGameOver -= HandleGameOver;
+        GameEventService.OnGameState -= HandleGameState;
     }
 
     private void Update()
     {
+        if (!_enabled)
+            return;
+        
         foreach (var activeChunk in _activeChunks)
         {
             activeChunk.transform.Translate(_translationSpeed * Time.deltaTime * Vector3.back);
@@ -43,9 +46,9 @@ public class ObstacleGenerator : MonoBehaviour
         UpdateChunks();
     }
 
-    private void HandleGameOver()
+    private void HandleGameState(bool enterState)
     {
-        _translationSpeed = 0f;
+        _enabled = enterState;
     }
     
     private void AddBaseChunk()

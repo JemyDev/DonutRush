@@ -17,13 +17,13 @@ public class UIScoreController : MonoBehaviour, IDataService
     {
         SetScore(_currentScore);
         GameEventService.OnOrderCompleted += HandleOrderCompleted;
-        GameEventService.OnGameOver += HandleGameOver;
+        GameEventService.OnGameOverState += HandleGameOver;
     }
 
     private void OnDestroy()
     {
         GameEventService.OnOrderCompleted -= HandleOrderCompleted;
-        GameEventService.OnGameOver -= HandleGameOver;
+        GameEventService.OnGameOverState -= HandleGameOver;
     }
 
     private void HandleOrderCompleted(int scoreToAdd)
@@ -32,8 +32,9 @@ public class UIScoreController : MonoBehaviour, IDataService
         UpdateScoreData();
     }
 
-    private void HandleGameOver()
+    private void HandleGameOver(bool enterState)
     {
+        if (!enterState) return;
         // Save total high score
         UpdateScoreData();
     }

@@ -7,23 +7,23 @@ public class UITimerController : MonoBehaviour
     [SerializeField] private float _totalTime = 60f;
     [SerializeField] private TMP_Text _timerText;
 
-    private bool _isGameOver = false;
+    private bool _isGameOver;
 
     private void Start()
     {
         GameEventService.OnOrderCompleted += ResetTimer;
-        GameEventService.OnGameOver += HandleGameOver;
+        GameEventService.OnGameOverState += HandleGameOver;
     }
 
     private void OnDestroy()
     {
         GameEventService.OnOrderCompleted -= ResetTimer;
-        GameEventService.OnGameOver -= HandleGameOver;
+        GameEventService.OnGameOverState -= HandleGameOver;
     }
     
-    private void HandleGameOver()
+    private void HandleGameOver(bool enterState)
     {
-        _isGameOver = true;
+        _isGameOver = enterState;
     }
 
     private void Update()

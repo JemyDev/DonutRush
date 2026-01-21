@@ -8,17 +8,17 @@ public class UIGameOverOverlayController : MonoBehaviour
     
     private void Start()
     {
-        GameEventService.OnGameOver += HandleGameOver;
+        GameEventService.OnGameOverState += HandleGameOver;
     }
 
     private void OnDestroy()
     {
-        GameEventService.OnGameOver -= HandleGameOver;
+        GameEventService.OnGameOverState -= HandleGameOver;
     }
     
-    private void HandleGameOver()
+    private void HandleGameOver(bool enterState)
     {
-        _gameOverUI.SetActive(true);
+        _gameOverUI.SetActive(enterState);
     }
 
     public void RestartGame()
