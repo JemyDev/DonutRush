@@ -23,6 +23,11 @@ public class UILifeController : MonoBehaviour
 
     private void SetLife(int life)
     {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+        
         for (var i = 0; i < life; i++)
         {
             Instantiate(_lifePointPrefab, transform);
