@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using Services.GameEventService;
 
 public class UITimerController : MonoBehaviour
 {

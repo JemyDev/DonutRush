@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Services.GameEventService;
 
 /// <summary>
 /// UI Life Controller to manage player's life points display

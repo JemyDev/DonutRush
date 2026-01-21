@@ -1,5 +1,7 @@
 using TMPro;
 using UnityEngine;
+using Services.GameEventService;
+using Services.SaveService;
 
 /// <summary>
 /// Handle the UI Score display and updates regarding current ingredient collected
