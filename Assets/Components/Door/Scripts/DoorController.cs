@@ -1,4 +1,5 @@
 using UnityEngine;
+using Services.GameEventService;
 
 /// <summary>
 /// Door controller that updates Door prefab based on distributed ingredient
@@ -6,7 +7,7 @@ using UnityEngine;
 public class DoorController : MonoBehaviour
 {
     [Header("Ingredient Parameter")]
-    [SerializeField] private IngredientScriptableObject _ingredient;
+    [SerializeField] private IngredientData _ingredient;
     
     [Header("Door Prefab Parameters")]
     [SerializeField] private MeshRenderer[] _wallsMeshRenderer;
@@ -14,17 +15,17 @@ public class DoorController : MonoBehaviour
 
     private void Awake()
     {
-        GameEventService.OnIngredientDistributed += AttachIngredient;
+        GameEventService.OnIngredientSpawned += AttachIngredient;
         GameEventService.OnPlayerTriggerDoorPassed += HandleDoorPassed;
     }
 
     private void OnDestroy()
     {
-        GameEventService.OnIngredientDistributed -= AttachIngredient;
+        GameEventService.OnIngredientSpawned -= AttachIngredient;
         GameEventService.OnPlayerTriggerDoorPassed -= HandleDoorPassed;
     }
     
-    private void AttachIngredient(IngredientScriptableObject ingredient)
+    private void AttachIngredient(IngredientData ingredient)
     {
         if (_ingredient) return;
         

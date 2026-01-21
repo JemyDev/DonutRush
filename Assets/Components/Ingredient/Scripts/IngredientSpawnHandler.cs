@@ -1,13 +1,14 @@
 using System.Linq;
 using UnityEngine;
+using Services.GameEventService;
 
 /// <summary>
 /// Handles the distribution of ingredients based on the current order
 /// </summary>
-public class IngredientDistributor : MonoBehaviour
+public class IngredientSpawnHandler : MonoBehaviour
 {
-    [SerializeField] private IngredientScriptableObject[] _currentOrderIngredients;
-    [SerializeField] private IngredientScriptableObject[] _defaultIngredientsList;
+    [SerializeField] private IngredientData[] _currentOrderIngredients;
+    [SerializeField] private IngredientData[] _defaultIngredientsList;
     
     private void Awake()
     {
@@ -35,6 +36,6 @@ public class IngredientDistributor : MonoBehaviour
         }
         
         var randomIndex = Random.Range(0, _currentOrderIngredients.Length);
-        GameEventService.OnIngredientDistributed?.Invoke(_currentOrderIngredients[randomIndex]);
+        GameEventService.OnIngredientSpawned?.Invoke(_currentOrderIngredients[randomIndex]);
     }
 }

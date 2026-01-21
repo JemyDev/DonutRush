@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Services.GameEventService;
 
 namespace Components.Player.Scripts
 {

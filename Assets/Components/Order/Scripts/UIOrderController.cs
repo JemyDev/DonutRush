@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using Services.GameEventService;
 
 /// <summary>
 /// UI Order controller that updates the order UI based on current order
@@ -57,7 +58,7 @@ public class UIOrderController : MonoBehaviour
         _totalText.text = TotalOrderCalories.ToString();
     }
     
-    private void HandleTotalCaloriesUpdate(IngredientScriptableObject ingredient)
+    private void HandleTotalCaloriesUpdate(IngredientData ingredient)
     {
         UpdateTotalCalories();
     }

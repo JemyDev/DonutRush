@@ -1,4 +1,5 @@
 using UnityEngine;
+using Services.GameEventService;
 
 public class ObstacleSpeedController : MonoBehaviour
 {

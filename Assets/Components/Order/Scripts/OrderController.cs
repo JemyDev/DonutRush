@@ -1,4 +1,6 @@
 using UnityEngine;
+using Services.GameEventService;
+using Services.SaveService;
 
 /// <summary>
 /// Handle current order and updates it
@@ -26,7 +28,7 @@ public class OrderController : MonoBehaviour, IDataService
         SetCurrentOrder(order);
     }
     
-    private void HandleOrderUpdate(IngredientScriptableObject ingredient)
+    private void HandleOrderUpdate(IngredientData ingredient)
     {
         UpdateOrderLine(ingredient.ingredientName);
     }

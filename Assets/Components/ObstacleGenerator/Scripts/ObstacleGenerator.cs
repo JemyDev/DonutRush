@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Services.GameEventService;
 
 /// <summary>
 /// Generate infinite random chunks and make them translate

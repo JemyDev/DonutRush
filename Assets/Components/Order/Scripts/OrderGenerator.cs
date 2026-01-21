@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using Services.GameEventService;
 
 /// <summary>
 /// Handle order generation with a random pick of Scriptable Object ingredients
@@ -8,7 +9,7 @@ using Random = UnityEngine.Random;
 public class OrderGenerator : MonoBehaviour
 {
     [Header("Scriptable Objects Parameters")]
-    [SerializeField] private IngredientScriptableObject[] _availableIngredients;
+    [SerializeField] private IngredientData[] _availableIngredients;
     
     [Header("Order Parameters")]
     [SerializeField] private int _maxIngredientsPerOrder = 3;

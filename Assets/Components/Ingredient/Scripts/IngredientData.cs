@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Ingredient", menuName = "Ingredients/Ingredient")]
-public class IngredientScriptableObject : ScriptableObject
+[CreateAssetMenu(fileName = "IngredientData", menuName = "Ingredients/IngredientData")]
+public class IngredientData : ScriptableObject
 {
     public Color ingredientColor;
     public int ingredientScore;
