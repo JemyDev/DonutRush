@@ -35,6 +35,8 @@ public class DoorController : MonoBehaviour
     
     private void HandleDoorPassed(Collider doorReference)
     {
+        if (_doorTrigger == null || _ingredient == null) return;
+        
         if (doorReference.gameObject == _doorTrigger.gameObject)
         {
             GameEventService.OnIngredientCollected?.Invoke(_ingredient);

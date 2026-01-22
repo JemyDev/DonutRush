@@ -8,6 +8,23 @@ namespace Services.GameEventService
     /// </summary>
     public static class GameEventService
     {
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStaticEvents()
+        {
+            OnMoveInputPerformed = null;
+            OnJumpInputPerformed = null;
+            OnPlayerMoving = null;
+            OnUpdateLaneTarget = null;
+            OnPlayerCollision = null;
+            OnPlayerTriggerDoorPassed = null;
+            OnIngredientCollected = null;
+            OnIngredientSpawned = null;
+            OnDoorInstantiated = null;
+            OnOrderCreated = null;
+            OnOrderCompleted = null;
+            OnGameOver = null;
+        }
+        
         /// <summary>
         /// Performed when player performs move input
         /// </summary>

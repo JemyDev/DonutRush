@@ -4,7 +4,9 @@ using Services.GameEventService;
 
 public class UITimerController : MonoBehaviour
 {
-    [SerializeField] private float _totalTime = 60f;
+    private const float DEFAULT_TIME = 60f;
+    
+    [SerializeField] private float _totalTime = DEFAULT_TIME;
     [SerializeField] private TMP_Text _timerText;
 
     private bool _isGameOver = false;
@@ -36,6 +38,6 @@ public class UITimerController : MonoBehaviour
     
     private void ResetTimer(int obj)
     {
-        _totalTime = 60f;
+        _totalTime = DEFAULT_TIME;
     }
 }

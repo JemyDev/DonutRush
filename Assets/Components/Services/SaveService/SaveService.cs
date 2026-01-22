@@ -9,11 +9,20 @@ namespace Services.SaveService
         private const string FILE_NAME = "game_save_data.json";
         private static string FilePath => Path.Combine(Application.persistentDataPath, FILE_NAME);
 
-        public static void Save(SaveData saveData)
+        public static bool Save(SaveData saveData)
         {
-            var json = JsonUtility.ToJson(saveData);
-            File.WriteAllText(FilePath, json);
-            Debug.Log("Game saved in " + FilePath);
+            try
+            {
+                var json = JsonUtility.ToJson(saveData);
+                File.WriteAllText(FilePath, json);
+                Debug.Log("Game saved in " + FilePath);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Failed to save game data: {e.Message}");
+                return false;
+            }
         }
 
         public static bool TryLoad(out SaveData saveData)

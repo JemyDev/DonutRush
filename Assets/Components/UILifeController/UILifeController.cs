@@ -50,7 +50,9 @@ public class UILifeController : MonoBehaviour
 
     private void UpdateLife()
     {
-        var lastLifePointIndex = CurrentLife - 1;
+        if (_currentLifePoints.Count == 0) return;
+        
+        var lastLifePointIndex = _currentLifePoints.Count - 1;
         var lifePointToRemove = _currentLifePoints[lastLifePointIndex];
         _currentLifePoints.RemoveAt(lastLifePointIndex);
         Destroy(lifePointToRemove.gameObject);

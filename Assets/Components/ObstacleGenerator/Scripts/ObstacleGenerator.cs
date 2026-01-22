@@ -17,7 +17,7 @@ public class ObstacleGenerator : MonoBehaviour
     [SerializeField] private ChunkController[] _chunkPrefabs;
 
     private readonly List<ChunkController> _activeChunks = new();
-    private ChunkController LastChunk => _activeChunks[^1];
+    private ChunkController LastChunk => _activeChunks.Count > 0 ? _activeChunks[^1] : null;
     private int _lastChunkIndex = 0;
     
     public float TranslationSpeed => _translationSpeed;
@@ -58,7 +58,10 @@ public class ObstacleGenerator : MonoBehaviour
                 continue;
             }
             
-            AddNewChunk(LastChunk.EndAnchor.position);
+            if (LastChunk != null)
+            {
+                AddNewChunk(LastChunk.EndAnchor.position);
+            }
         }
     }
 
@@ -66,15 +69,12 @@ public class ObstacleGenerator : MonoBehaviour
     {
         var newChunkIndex = Random.Range(0, _chunkPrefabs.Length);
 
-        if (_preventSameChunkGeneration)
+        if (_preventSameChunkGeneration && _chunkPrefabs.Length > 1)
         {
-            for (var i = 0; i < 10; i++)
+            do
             {
-                if (newChunkIndex == _lastChunkIndex)
-                {
-                    newChunkIndex = Random.Range(0, _chunkPrefabs.Length);
-                }
-            }
+                newChunkIndex = Random.Range(0, _chunkPrefabs.Length);
+            } while (newChunkIndex == _lastChunkIndex);
 
             _lastChunkIndex = newChunkIndex;
         }
@@ -117,7 +117,10 @@ public class ObstacleGenerator : MonoBehaviour
 
         for (var i = 0; i < missingChunkCount; i++)
         {
-            AddNewChunk(LastChunk.EndAnchor.position);
+            if (LastChunk != null)
+            {
+                AddNewChunk(LastChunk.EndAnchor.position);
+            }
         }
     }
 
