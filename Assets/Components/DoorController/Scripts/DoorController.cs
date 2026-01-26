@@ -47,7 +47,7 @@ public class DoorController : MonoBehaviour
         
         foreach (var wall in _wallsMeshRenderer)
         {
-            wall.material = _ingredient.ingredientMaterial;
+            wall.material = _ingredient.Material;
         }
     }
 }
