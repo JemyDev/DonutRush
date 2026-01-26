@@ -1,7 +1,9 @@
-using System.Collections.Generic;
+using Components.Data;
 using UnityEngine;
 using UnityEngine.UI;
+using Components.SODatabase;
 using Services.GameEventService;
+using Services.SaveService;
 
 /// <summary>
 /// UI Life Controller to manage player's life points display
@@ -13,6 +15,14 @@ public class UILifeController : MonoBehaviour
 
     private void Start()
     {
+        var levelIndex = 1;
+        if (SaveService.TryLoad(out var saveData))
+        {
+            levelIndex = saveData.LevelIndex;
+        }
+        
+        var parameters = ScriptableObjectDatabase.Get<LevelParametersData>("Level" + levelIndex);
+        SetLife(parameters.PlayerLife);
         GameEventService.OnPlayerLifeUpdated += SetLife;
     }
 

@@ -5,7 +5,7 @@ using Services.SaveService;
 /// <summary>
 /// Handle current order and updates it
 /// </summary>
-public class OrderController : MonoBehaviour, IDataService
+public class OrderController : MonoBehaviour
 {
     private Order _currentOrder;
     private bool IsOrderCompleted => _currentOrder.TotalCalories == 0;
@@ -49,9 +49,13 @@ public class OrderController : MonoBehaviour, IDataService
             _currentOrder.OrderLines[ingredientName] = orderLine;
             
             // Save total ingredients collected
-            var saveData = GetSaveData();
+            if (!SaveService.TryLoad(out var saveData))
+            {
+                saveData = new SaveData();
+            }
+            
             saveData.TotalIngredientsCollected++;
-            Save(saveData);
+            SaveService.Save(saveData);
         }
         
         if (IsOrderCompleted && _currentOrder.OrderLines.Count > 0)
@@ -59,20 +63,5 @@ public class OrderController : MonoBehaviour, IDataService
             _currentOrder.OrderLines.Clear();
             GameEventService.OnOrderCompleted?.Invoke(_scoreToAdd);
         }
-    }
-
-    public SaveData GetSaveData()
-    {
-        if (!SaveService.TryLoad(out var saveData))
-        {
-            saveData = new SaveData();
-        }
-
-        return saveData;
-    }
-
-    public void Save(SaveData saveData)
-    {
-        SaveService.Save(saveData);
     }
 }

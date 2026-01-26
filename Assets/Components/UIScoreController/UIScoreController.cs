@@ -6,7 +6,7 @@ using Services.SaveService;
 /// <summary>
 /// Handle the UI Score display and updates regarding current ingredient collected
 /// </summary>
-public class UIScoreController : MonoBehaviour, IDataService
+public class UIScoreController : MonoBehaviour
 {
     [Header("UI Element")]
     [SerializeField] private TMP_Text _scoreText;
@@ -41,11 +41,16 @@ public class UIScoreController : MonoBehaviour, IDataService
 
     private void UpdateScoreData()
     {
-        var saveData = GetSaveData();
+        
+        if (!SaveService.TryLoad(out var saveData))
+        {
+            saveData = new SaveData();
+        }
+        
         if (saveData.HighScore < _currentScore)
         {
             saveData.HighScore = _currentScore;
-            Save(saveData);
+            SaveService.Save(saveData);
         }
     }
     
@@ -53,21 +58,5 @@ public class UIScoreController : MonoBehaviour, IDataService
     {
         _currentScore += scoreToAdd;
         _scoreText.text = _currentScore.ToString();
-    }
-
-    public SaveData GetSaveData()
-    {
-        // Save total high score
-        if (!SaveService.TryLoad(out var saveData))
-        {
-            saveData = new SaveData();
-        }
-
-        return saveData;
-    }
-
-    public void Save(SaveData saveData)
-    {
-        SaveService.Save(saveData);
     }
 }

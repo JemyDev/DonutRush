@@ -2,13 +2,18 @@ using UnityEngine;
 using Services.SaveService;
 using Services.SceneLoaderService;
 
-public class UIMainMenuController : MonoBehaviour, IDataService
+public class UIMainMenuController : MonoBehaviour
 {
-    public void PlayGame()
+    public void PlayGame(int levelIndex)
     {
         // Save total ingredients collected
-        var saveData = GetSaveData();
+        if (!SaveService.TryLoad(out var saveData))
+        {
+            saveData = new SaveData();
+        }
+        
         saveData.RunCount++;
+        saveData.LevelIndex = levelIndex;
         Save(saveData);
 
         SceneLoaderService.LoadLevel();

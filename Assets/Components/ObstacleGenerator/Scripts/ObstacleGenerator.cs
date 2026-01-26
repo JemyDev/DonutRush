@@ -1,6 +1,9 @@
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
+using Components.Data;
+using Components.SODatabase;
 using Services.GameEventService;
+using Services.SaveService;
 
 /// <summary>
 /// Generate infinite random chunks and make them translate
@@ -24,6 +27,14 @@ public class ObstacleGenerator : MonoBehaviour
 
     private void Start()
     {
+        var levelIndex = 1;
+        if (SaveService.TryLoad(out SaveData saveData))
+        {
+            levelIndex = saveData.LevelIndex;
+        }
+        var parameters = ScriptableObjectDatabase.Get<LevelParametersData>("Level" + levelIndex);
+        _translationSpeed = parameters.Speed;
+        
         AddBaseChunk();
         GameEventService.OnGameState += HandleGameState;
     }

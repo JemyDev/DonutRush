@@ -1,20 +1,18 @@
 using System.Collections.Generic;
+using Components.Data;
+using Components.SODatabase;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using Services.GameEventService;
+using Services.SaveService;
 
 /// <summary>
 /// Handle order generation with a random pick of Scriptable Object ingredients
 /// </summary>
 public class OrderGenerator : MonoBehaviour
 {
-    [Header("Scriptable Objects Parameters")]
-    [SerializeField] private IngredientData[] _availableIngredients;
-    
-    [Header("Order Parameters")]
-    [SerializeField] private int _maxIngredientsPerOrder = 3;
-    [SerializeField] private int _minIngredientsPerOrderLine = 1;
-    [SerializeField] private int _maxIngredientsPerOrderLine = 5;
+    private IngredientData[] _availableIngredients;
+    private LevelParametersData _levelParametersData;
 
     private void Awake()
     {
@@ -23,6 +21,17 @@ public class OrderGenerator : MonoBehaviour
 
     private void Start()
     {
+        // Load level parameters
+        var levelIndex = 1;
+        if (SaveService.TryLoad(out var saveData))
+        {
+            levelIndex = saveData.LevelIndex;
+        }
+        _levelParametersData = ScriptableObjectDatabase.Get<LevelParametersData>("Level" + levelIndex);
+        _availableIngredients = ScriptableObjectDatabase.GetAll<IngredientData>();
+        
+        Debug.Log(_availableIngredients);
+        
         // Create a new order on start
         CreateNewOrder();
     }
@@ -42,16 +51,16 @@ public class OrderGenerator : MonoBehaviour
     {
         var newOrderLines = new Dictionary<string, OrderLine>();
         
-        for (var i = 0; i < _maxIngredientsPerOrder; i++)
+        for (var i = 0; i < _levelParametersData.MaxIngredientsPerOrder; i++)
         {
             var ingredient = _availableIngredients[Random.Range(0, _availableIngredients.Length)];
             
-            if (newOrderLines.ContainsKey(ingredient.ingredientName))
+            if (newOrderLines.ContainsKey(ingredient.Name))
                 continue;
             
-            var quantity = Random.Range(_minIngredientsPerOrderLine, _maxIngredientsPerOrderLine);
+            var quantity = Random.Range(_levelParametersData.MinIngredientsPerOrderLine, _levelParametersData.MaxIngredientsPerOrderLine);
             var orderLine = new OrderLine(ingredient, quantity);
-            newOrderLines.Add(ingredient.ingredientName, orderLine);
+            newOrderLines.Add(ingredient.Name, orderLine);
         }
         
         var newOrder = new Order(newOrderLines);
