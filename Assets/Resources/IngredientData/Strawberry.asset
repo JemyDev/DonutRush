@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 763dfe6496dd34645be43b9fb3af7cce, type: 3}
   m_Name: Strawberry
   m_EditorClassIdentifier: Assembly-CSharp::IngredientScriptableObject
-  ingredientColor: {r: 0.65882355, g: 0.21568628, b: 0.23137255, a: 0}
-  ingredientScore: 25
-  ingredientName: Strawberry
-  ingredientSprite: {fileID: 21300000, guid: b72023ef6c5c54ebb94ee8c520cfe2e9, type: 3}
-  ingredientPrefab: {fileID: 0}
-  ingredientMaterial: {fileID: 2100000, guid: 9d8deb4f3f738469ba18b4c914317298, type: 2}
+  _color: {r: 0.65882355, g: 0.21568628, b: 0.23137255, a: 0}
+  _score: 25
+  _name: Strawberry
+  _sprite: {fileID: 21300000, guid: b72023ef6c5c54ebb94ee8c520cfe2e9, type: 3}
+  _prefab: {fileID: 0}
+  _material: {fileID: 2100000, guid: 9d8deb4f3f738469ba18b4c914317298, type: 2}
