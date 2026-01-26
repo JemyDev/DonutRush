@@ -1,4 +1,5 @@
 using Components.Data;
+using Components.SODatabase;
 using Services.GameEventService;
 
 namespace Components.StateMachine.States
@@ -6,14 +7,19 @@ namespace Components.StateMachine.States
     public class GameState : State
     {
         private int _currentLife;
-        
-        public GameState(StateMachine stateMachine, LevelParametersData levelParametersData) : base(stateMachine, levelParametersData) { }
+        private int _currentLevelIndex;
+
+        public GameState(StateMachine stateMachine, LevelParametersData levelParametersData, int levelIndex = 1) : base(stateMachine, levelParametersData)
+        {
+            _currentLevelIndex = levelIndex;
+        }
 
         public override void Enter()
         {
             GameEventService.OnGameState?.Invoke(true);
             GameEventService.OnPlayerCollision += HandlePlayerCollision;
-            
+            GameEventService.OnOrderCompleted += HandleOrderCompleted;
+
             _currentLife = LevelParameters.PlayerLife;
         }
 
@@ -23,8 +29,9 @@ namespace Components.StateMachine.States
         {
             GameEventService.OnGameState?.Invoke(false);
             GameEventService.OnPlayerCollision -= HandlePlayerCollision;
+            GameEventService.OnOrderCompleted -= HandleOrderCompleted;
         }
-        
+
         private void HandlePlayerCollision()
         {
             _currentLife--;
@@ -34,6 +41,17 @@ namespace Components.StateMachine.States
             {
                 StateMachine.ChangeState(new GameOverState(StateMachine, LevelParameters));
             }
+        }
+
+        private void HandleOrderCompleted(int score)
+        {
+            _currentLevelIndex++;
+            var newLevel = ScriptableObjectDatabase.Get<LevelParametersData>("Level" + _currentLevelIndex);
+
+            if (newLevel is null)
+                return;
+            
+            GameEventService.OnLevelChanged?.Invoke(newLevel);
         }
     }
 }

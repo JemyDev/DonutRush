@@ -17,21 +17,20 @@ public class OrderGenerator : MonoBehaviour
     private void Awake()
     {
         GameEventService.OnOrderCompleted += HandleCompletedOrder;
+        GameEventService.OnLevelChanged += HandleLevelChanged;
     }
 
     private void Start()
     {
-        // Load level parameters
         var levelIndex = 1;
         if (SaveService.TryLoad(out var saveData))
         {
             levelIndex = saveData.LevelIndex;
         }
+
         _levelParametersData = ScriptableObjectDatabase.Get<LevelParametersData>("Level" + levelIndex);
         _availableIngredients = ScriptableObjectDatabase.GetAll<IngredientData>();
-        
-        Debug.Log(_availableIngredients);
-        
+
         // Create a new order on start
         CreateNewOrder();
     }
@@ -39,6 +38,7 @@ public class OrderGenerator : MonoBehaviour
     private void OnDestroy()
     {
         GameEventService.OnOrderCompleted -= HandleCompletedOrder;
+        GameEventService.OnLevelChanged -= HandleLevelChanged;
     }
     
     private void CreateNewOrder()
@@ -50,26 +50,29 @@ public class OrderGenerator : MonoBehaviour
     private Order GenerateOrder()
     {
         var newOrderLines = new Dictionary<string, OrderLine>();
-        
+
         for (var i = 0; i < _levelParametersData.MaxIngredientsPerOrder; i++)
         {
             var ingredient = _availableIngredients[Random.Range(0, _availableIngredients.Length)];
-            
+
             if (newOrderLines.ContainsKey(ingredient.Name))
                 continue;
-            
-            var quantity = Random.Range(_levelParametersData.MinIngredientsPerOrderLine, _levelParametersData.MaxIngredientsPerOrderLine);
+
+            var quantity = Random.Range(_levelParametersData.MinIngredientsPerOrderLine, _levelParametersData.MaxIngredientsPerOrderLine + 1);
             var orderLine = new OrderLine(ingredient, quantity);
             newOrderLines.Add(ingredient.Name, orderLine);
         }
-        
-        var newOrder = new Order(newOrderLines);
 
-        return newOrder;
+        return new Order(newOrderLines);
     }
 
     private void HandleCompletedOrder(int score)
     {
         CreateNewOrder();
+    }
+
+    private void HandleLevelChanged(LevelParametersData newParameters)
+    {
+        _levelParametersData = newParameters;
     }
 }

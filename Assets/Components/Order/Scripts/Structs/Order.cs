@@ -3,7 +3,6 @@ using System.Linq;
 
 public readonly struct Order
 {
-
     public Order(Dictionary<string, OrderLine> orderLines)
     {
         OrderLines = new Dictionary<string, OrderLine>(orderLines);

@@ -23,7 +23,6 @@ public class ObstacleGenerator : MonoBehaviour
     private ChunkController LastChunk => _activeChunks[^1];
     private int _lastChunkIndex;
     private bool _enabled;
-    public float TranslationSpeed => _translationSpeed;
 
     private void Start()
     {
@@ -37,11 +36,13 @@ public class ObstacleGenerator : MonoBehaviour
         
         AddBaseChunk();
         GameEventService.OnGameState += HandleGameState;
+        GameEventService.OnLevelChanged += HandleLevelChanged;
     }
     
     private void OnDestroy()
     {
         GameEventService.OnGameState -= HandleGameState;
+        GameEventService.OnLevelChanged -= HandleLevelChanged;
     }
 
     private void Update()
@@ -140,8 +141,8 @@ public class ObstacleGenerator : MonoBehaviour
         GameEventService.OnDoorInstantiated?.Invoke();
     }
     
-    public void IncreaseTranslationSpeed(float newSpeed)
+    private void HandleLevelChanged(LevelParametersData newParameters)
     {
-        _translationSpeed = newSpeed;
+        _translationSpeed = newParameters.Speed;
     }
 }

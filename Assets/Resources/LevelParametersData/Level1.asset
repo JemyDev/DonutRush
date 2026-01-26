@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Components.Data.LevelParametersData
   _playerLife: 3
   _speed: 5
+  _maxIngredientsPerOrder: 1
+  _minIngredientsPerOrderLine: 1
+  _maxIngredientsPerOrderLine: 3

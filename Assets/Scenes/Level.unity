@@ -437,7 +437,6 @@ GameObject:
   m_Component:
   - component: {fileID: 422613801}
   - component: {fileID: 422613802}
-  - component: {fileID: 422613803}
   m_Layer: 0
   m_Name: ObstacleGenerator
   m_TagString: Untagged
@@ -481,21 +480,6 @@ MonoBehaviour:
   - {fileID: 5257790882892001718, guid: 201ea13ad0fd44a4689718a209f4feda, type: 3}
   - {fileID: 700052206457168482, guid: 6de79867c53a94d4d98e228f59b8fb90, type: 3}
   - {fileID: 4099437477763088553, guid: c63f05f2c47fb644a93323f0377ce4cc, type: 3}
---- !u!114 &422613803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 422613800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c0ba2c578fc32241a4ac528564074c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ObstacleSpeedController
-  _obstacleGenerator: {fileID: 422613802}
-  _speedIncrement: 1.5
-  _maxSpeed: 10
 --- !u!1 &698271799
 GameObject:
   m_ObjectHideFlags: 0
@@ -814,16 +798,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d48ffea8599fe91428fe22dd1b969c1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OrderGenerator
-  _availableIngredients:
-  - {fileID: 11400000, guid: 869b0f7361d5bd743964c0547394cc7f, type: 2}
-  - {fileID: 11400000, guid: 81816abc99dd093419e69d6be06d1ed0, type: 2}
-  - {fileID: 11400000, guid: e4a70a3d18343d54eb394839c69fbdbd, type: 2}
-  - {fileID: 11400000, guid: 29e373dc6543b274abd7050aeca6dc31, type: 2}
-  - {fileID: 11400000, guid: 528388faccefe11478256e74c4ce32e3, type: 2}
-  - {fileID: 11400000, guid: 89e1ba3f0a13b744bafaed198b34e9ff, type: 2}
-  _maxIngredientsPerOrder: 3
-  _minIngredientsPerOrderLine: 1
-  _maxIngredientsPerOrderLine: 5
 --- !u!114 &1768767461
 MonoBehaviour:
   m_ObjectHideFlags: 0

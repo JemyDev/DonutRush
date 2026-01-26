@@ -57,11 +57,16 @@ public class OrderController : MonoBehaviour
             saveData.TotalIngredientsCollected++;
             SaveService.Save(saveData);
         }
-        
+
         if (IsOrderCompleted && _currentOrder.OrderLines.Count > 0)
         {
-            _currentOrder.OrderLines.Clear();
-            GameEventService.OnOrderCompleted?.Invoke(_scoreToAdd);
+            ValidateOrder();
         }
+    }
+
+    private void ValidateOrder()
+    {
+        _currentOrder.OrderLines.Clear();
+        GameEventService.OnOrderCompleted?.Invoke(_scoreToAdd);
     }
 }

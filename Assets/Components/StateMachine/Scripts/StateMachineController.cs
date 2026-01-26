@@ -21,8 +21,8 @@ namespace Components.StateMachine
             var parameters = ScriptableObjectDatabase.Get<LevelParametersData>("Level" + levelIndex);
             
             _stateMachine = new StateMachine();
-            var initialState = new CountdownState(_stateMachine, parameters);
-            
+            var initialState = new CountdownState(_stateMachine, parameters, levelIndex);
+
             _stateMachine.ChangeState(initialState);
         }
         

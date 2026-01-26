@@ -1,5 +1,6 @@
-using System;
 using UnityEngine;
+using System;
+using Components.Data;
 
 namespace Services.GameEventService
 {
@@ -48,5 +49,8 @@ namespace Services.GameEventService
         public static Action<int> OnPlayerLifeUpdated;
         public static Action<bool> OnGameState;
         public static Action<bool> OnGameOverState;
+
+        // Level Events
+        public static Action<LevelParametersData> OnLevelChanged;
     }
 }
