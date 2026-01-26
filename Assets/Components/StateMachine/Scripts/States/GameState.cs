@@ -1,18 +1,20 @@
+using Components.Data;
 using Services.GameEventService;
 
 namespace Components.StateMachine.States
 {
     public class GameState : State
     {
-        private int _life = 3;
+        private int _currentLife;
         
-        public GameState(StateMachine stateMachine) : base(stateMachine) { }
+        public GameState(StateMachine stateMachine, LevelParametersData levelParametersData) : base(stateMachine, levelParametersData) { }
 
         public override void Enter()
         {
             GameEventService.OnGameState?.Invoke(true);
             GameEventService.OnPlayerCollision += HandlePlayerCollision;
-            GameEventService.OnPlayerLifeUpdated?.Invoke(_life);
+            
+            _currentLife = LevelParameters.PlayerLife;
         }
 
         public override void Update() { }
@@ -25,12 +27,12 @@ namespace Components.StateMachine.States
         
         private void HandlePlayerCollision()
         {
-            _life--;
-            GameEventService.OnPlayerLifeUpdated?.Invoke(_life);
+            _currentLife--;
+            GameEventService.OnPlayerLifeUpdated?.Invoke(_currentLife);
 
-            if (_life <= 0)
+            if (_currentLife <= 0)
             {
-                StateMachine.ChangeState(new GameOverState(StateMachine));
+                StateMachine.ChangeState(new GameOverState(StateMachine, LevelParameters));
             }
         }
     }
