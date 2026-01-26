@@ -30,7 +30,7 @@ public class OrderController : MonoBehaviour, IDataService
     
     private void HandleOrderUpdate(IngredientData ingredient)
     {
-        UpdateOrderLine(ingredient.ingredientName);
+        UpdateOrderLine(ingredient.Name);
     }
 
     private void SetCurrentOrder(Order currentOrder)

@@ -8,7 +8,7 @@ public struct OrderLine
 
     public readonly IngredientData Ingredient;
     public int Quantity;
-    public int TotalScoreByLine => Ingredient.ingredientScore * Quantity;
+    public int TotalScoreByLine => Ingredient.Score * Quantity;
     
     public void DecreaseQuantity()
     {
