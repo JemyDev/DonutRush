@@ -50,7 +50,7 @@ public class UIOrderController : MonoBehaviour
     private void CreateOrderLineUI(OrderLine orderLine)
     {
         var orderLineUI = Instantiate(_orderLinePrefab, transform);
-        orderLineUI.AddSprite(orderLine.Ingredient.ingredientSprite);
+        orderLineUI.AddSprite(orderLine.Ingredient.Sprite);
     }
     
     private void UpdateTotalCalories()

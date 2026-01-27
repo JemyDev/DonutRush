@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Components.Data;
+using Components.SODatabase;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using Services.GameEventService;
@@ -8,30 +10,39 @@ using Services.GameEventService;
 /// </summary>
 public class OrderGenerator : MonoBehaviour
 {
-    [Header("Scriptable Objects Parameters")]
-    [SerializeField] private IngredientData[] _availableIngredients;
-    
-    [Header("Order Parameters")]
-    [SerializeField] private int _maxIngredientsPerOrder = 3;
-    [SerializeField] private int _minIngredientsPerOrderLine = 1;
-    [SerializeField] private int _maxIngredientsPerOrderLine = 5;
+    private IngredientData[] _availableIngredients;
+
+    // Current level parameters
+    private int _maxIngredientsPerOrder;
+    private int _minIngredientsPerOrderLine;
+    private int _maxIngredientsPerOrderLine;
 
     private void Awake()
     {
         GameEventService.OnOrderCompleted += HandleCompletedOrder;
+        GameEventService.OnOrderFailed += HandleFailedOrder;
+        GameEventService.OnLevelChanged += HandleLevelChanged;
     }
 
     private void Start()
     {
-        // Create a new order on start
+        var baseParameters = ScriptableObjectDatabase.Get<LevelParametersData>("BaseLevelParameters");
+        _maxIngredientsPerOrder = baseParameters.MaxIngredientsPerOrder;
+        _minIngredientsPerOrderLine = baseParameters.MinIngredientsPerOrderLine;
+        _maxIngredientsPerOrderLine = baseParameters.MaxIngredientsPerOrderLine;
+
+        _availableIngredients = ScriptableObjectDatabase.GetAll<IngredientData>();
+
         CreateNewOrder();
     }
 
     private void OnDestroy()
     {
         GameEventService.OnOrderCompleted -= HandleCompletedOrder;
+        GameEventService.OnOrderFailed -= HandleFailedOrder;
+        GameEventService.OnLevelChanged -= HandleLevelChanged;
     }
-    
+
     private void CreateNewOrder()
     {
         var newOrder = GenerateOrder();
@@ -41,26 +52,36 @@ public class OrderGenerator : MonoBehaviour
     private Order GenerateOrder()
     {
         var newOrderLines = new Dictionary<string, OrderLine>();
-        
+
         for (var i = 0; i < _maxIngredientsPerOrder; i++)
         {
             var ingredient = _availableIngredients[Random.Range(0, _availableIngredients.Length)];
-            
-            if (newOrderLines.ContainsKey(ingredient.ingredientName))
-                continue;
-            
-            var quantity = Random.Range(_minIngredientsPerOrderLine, _maxIngredientsPerOrderLine);
-            var orderLine = new OrderLine(ingredient, quantity);
-            newOrderLines.Add(ingredient.ingredientName, orderLine);
-        }
-        
-        var newOrder = new Order(newOrderLines);
 
-        return newOrder;
+            if (newOrderLines.ContainsKey(ingredient.Name))
+                continue;
+
+            var quantity = Random.Range(_minIngredientsPerOrderLine, _maxIngredientsPerOrderLine + 1);
+            var orderLine = new OrderLine(ingredient, quantity);
+            newOrderLines.Add(ingredient.Name, orderLine);
+        }
+
+        return new Order(newOrderLines);
     }
 
     private void HandleCompletedOrder(int score)
     {
         CreateNewOrder();
+    }
+
+    private void HandleFailedOrder()
+    {
+        CreateNewOrder();
+    }
+
+    private void HandleLevelChanged(LevelParametersInfo newParameters)
+    {
+        _maxIngredientsPerOrder = newParameters.MaxIngredientsPerOrder;
+        _minIngredientsPerOrderLine = newParameters.MinIngredientsPerOrderLine;
+        _maxIngredientsPerOrderLine = newParameters.MaxIngredientsPerOrderLine;
     }
 }

@@ -1,5 +1,6 @@
-using System;
 using UnityEngine;
+using System;
+using Components.Data;
 
 namespace Services.GameEventService
 {
@@ -41,6 +42,16 @@ namespace Services.GameEventService
         public static Action OnDoorInstantiated;
         public static Action<Order> OnOrderCreated;
         public static Action<int> OnOrderCompleted;
-        public static Action OnGameOver;
+        public static Action OnOrderFailed;
+        public static Action<LevelParametersInfo> OnLevelChanged;
+        
+        // State Events
+        public static Action<bool> OnCountdownState;
+        public static Action<float> OnCountdownTick;
+        public static Action<int> OnPlayerLifeUpdated;
+        public static Action<bool> OnGameState;
+        public static Action<bool> OnGameOverState;
+        public static Action<int> OnScoreUpdated;
+        public static Action<float> OnTimerTick;
     }
 }

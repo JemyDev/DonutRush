@@ -1,5 +1,7 @@
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
+using Components.Data;
+using Components.SODatabase;
 using Services.GameEventService;
 
 /// <summary>
@@ -18,23 +20,30 @@ public class ObstacleGenerator : MonoBehaviour
 
     private readonly List<ChunkController> _activeChunks = new();
     private ChunkController LastChunk => _activeChunks[^1];
-    private int _lastChunkIndex = 0;
-    
-    public float TranslationSpeed => _translationSpeed;
+    private int _lastChunkIndex;
+    private bool _enabled;
 
     private void Start()
     {
+        var baseParameters = ScriptableObjectDatabase.Get<LevelParametersData>("BaseLevelParameters");
+        _translationSpeed = baseParameters.Speed;
+
         AddBaseChunk();
-        GameEventService.OnGameOver += HandleGameOver;
+        GameEventService.OnGameState += HandleGameState;
+        GameEventService.OnLevelChanged += HandleLevelChanged;
     }
     
     private void OnDestroy()
     {
-        GameEventService.OnGameOver -= HandleGameOver;
+        GameEventService.OnGameState -= HandleGameState;
+        GameEventService.OnLevelChanged -= HandleLevelChanged;
     }
 
     private void Update()
     {
+        if (!_enabled)
+            return;
+        
         foreach (var activeChunk in _activeChunks)
         {
             activeChunk.transform.Translate(_translationSpeed * Time.deltaTime * Vector3.back);
@@ -43,9 +52,9 @@ public class ObstacleGenerator : MonoBehaviour
         UpdateChunks();
     }
 
-    private void HandleGameOver()
+    private void HandleGameState(bool enterState)
     {
-        _translationSpeed = 0f;
+        _enabled = enterState;
     }
     
     private void AddBaseChunk()
@@ -126,8 +135,8 @@ public class ObstacleGenerator : MonoBehaviour
         GameEventService.OnDoorInstantiated?.Invoke();
     }
     
-    public void IncreaseTranslationSpeed(float newSpeed)
+    private void HandleLevelChanged(LevelParametersInfo newParameters)
     {
-        _translationSpeed = newSpeed;
+        _translationSpeed = newParameters.Speed;
     }
 }

@@ -1,58 +1,40 @@
-using System.Collections.Generic;
+using Components.Data;
 using UnityEngine;
 using UnityEngine.UI;
+using Components.SODatabase;
 using Services.GameEventService;
+using Services.SaveService;
 
 /// <summary>
 /// UI Life Controller to manage player's life points display
 /// </summary>
 public class UILifeController : MonoBehaviour
 {
-    [Header("Settings")]
-    [SerializeField] private int _startLife = 3;
-    
     [Header("UI Prefab")]
     [SerializeField] private Image _lifePointPrefab;
 
-    private readonly List<Image> _currentLifePoints = new();
-    private int CurrentLife => _currentLifePoints.Count;
-
     private void Start()
     {
-        SetBaseLife();
-        GameEventService.OnPlayerCollision += HandleCollision;
+        var parameters = ScriptableObjectDatabase.Get<LevelParametersData>("BaseLevelParameters");
+        SetLife(parameters.PlayerLife);
+        GameEventService.OnPlayerLifeUpdated += SetLife;
     }
 
     private void OnDestroy()
     {
-        GameEventService.OnPlayerCollision -= HandleCollision;
+        GameEventService.OnPlayerLifeUpdated -= SetLife;
     }
 
-    private void SetBaseLife()
+    private void SetLife(int life)
     {
-        for (var i = 0; i < _startLife; i++)
+        foreach (Transform child in transform)
         {
-            var newLifePoint = Instantiate(_lifePointPrefab, transform);
-            _currentLifePoints.Add(newLifePoint);
-        }
-    }
-
-    private void HandleCollision()
-    {
-        UpdateLife();
-        
-        if (CurrentLife <= 0)
-        {
-            GameEventService.OnGameOver?.Invoke();
+            Destroy(child.gameObject);
         }
         
-    }
-
-    private void UpdateLife()
-    {
-        var lastLifePointIndex = CurrentLife - 1;
-        var lifePointToRemove = _currentLifePoints[lastLifePointIndex];
-        _currentLifePoints.RemoveAt(lastLifePointIndex);
-        Destroy(lifePointToRemove.gameObject);
+        for (var i = 0; i < life; i++)
+        {
+            Instantiate(_lifePointPrefab, transform);
+        }
     }
 }

@@ -11,6 +11,16 @@ namespace Components.Player.Scripts
     {
         [SerializeField] private InputActionReference _moveActionReference;
         [SerializeField] private InputActionReference _jumpActionReference;
+
+        private void Start()
+        {
+            GameEventService.OnGameOverState += HandleGameOver;
+        }
+        
+        private void OnDestroy()
+        {
+            GameEventService.OnGameOverState -= HandleGameOver;
+        }
         
         private void OnEnable()
         {
@@ -41,6 +51,20 @@ namespace Components.Player.Scripts
         private void OnJump(InputAction.CallbackContext context)
         {
             GameEventService.OnJumpInputPerformed?.Invoke();
+        }
+        
+        private void HandleGameOver(bool enterState)
+        {
+            if (enterState)
+            {
+                _moveActionReference.action.performed -= OnMove;
+                _jumpActionReference.action.performed -= OnJump;
+            }
+            else
+            {
+                _moveActionReference.action.performed += OnMove;
+                _jumpActionReference.action.performed += OnJump;
+            }
         }
     }
 }

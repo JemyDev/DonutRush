@@ -26,11 +26,13 @@ namespace Components.Player.Scripts
         private void Awake()
         {
             GameEventService.OnJumpInputPerformed += HandleJump;
+            GameEventService.OnGameOverState += HandleGameOver;
         }
         
         private void OnDestroy()
         {
             GameEventService.OnJumpInputPerformed -= HandleJump;
+            GameEventService.OnGameOverState -= HandleGameOver;
         }
 
         private void HandleJump()
@@ -54,6 +56,11 @@ namespace Components.Player.Scripts
             
             _animator.SetTrigger(GROUNDED_PARAMETER);
             _isJumping = false;
+        }
+        
+        private void HandleGameOver(bool enterState)
+        {
+            _animator.enabled = !enterState;
         }
 
         private IEnumerator AnimateJumpCoroutine(AnimationCurve animationCurve)
