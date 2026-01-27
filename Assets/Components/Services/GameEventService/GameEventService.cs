@@ -51,5 +51,6 @@ namespace Services.GameEventService
         public static Action<bool> OnGameState;
         public static Action<bool> OnGameOverState;
         public static Action<int> OnScoreUpdated;
+        public static Action<float> OnTimerTick;
     }
 }

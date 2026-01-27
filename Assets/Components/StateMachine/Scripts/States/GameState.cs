@@ -10,6 +10,7 @@ namespace Components.StateMachine.States
         private int _currentLife;
         private int _currentLevel;
         private int _currentScore;
+        private float _orderTimer;
         
         private const float MAX_SPEED = 15f;
         private const float SPEED_INCREMENT_PER_LEVEL = 0.75f;
@@ -28,9 +29,26 @@ namespace Components.StateMachine.States
             GameEventService.OnOrderCompleted += HandleOrderCompleted;
 
             _currentLife = LevelParameters.PlayerLife;
+            _orderTimer = LevelParameters.OrderTimeLimit;
         }
 
-        public override void Update() { }
+        public override void Update()
+        {
+            _orderTimer -= Time.deltaTime;
+
+            if (_orderTimer > 0)
+            {
+                GameEventService.OnTimerTick?.Invoke(_orderTimer);
+                return;
+            }
+
+            if (_orderTimer == 0)
+            {
+                UpdateLife();
+                _orderTimer = LevelParameters.OrderTimeLimit;
+            }
+            
+        }
 
         public override void Exit()
         {
@@ -40,6 +58,11 @@ namespace Components.StateMachine.States
         }
 
         private void HandlePlayerCollision()
+        {
+            UpdateLife();
+        }
+
+        private void UpdateLife()
         {
             _currentLife--;
             GameEventService.OnPlayerLifeUpdated?.Invoke(_currentLife);
@@ -55,6 +78,7 @@ namespace Components.StateMachine.States
         {
             UpdateLevelParameters();
             _currentScore += score;
+            _orderTimer = LevelParameters.OrderTimeLimit;
             GameEventService.OnScoreUpdated?.Invoke(_currentScore);
         }
         
