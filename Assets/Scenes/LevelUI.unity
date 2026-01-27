@@ -2059,7 +2059,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a42b7b917c451f46a37b13bf10df5aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UITimerController
-  _totalTime: 60
   _timerText: {fileID: 1104277191}
 --- !u!1 &1858998489
 GameObject:
