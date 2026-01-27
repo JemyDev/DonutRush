@@ -1,5 +1,6 @@
 using Components.Data;
 using Services.GameEventService;
+using Services.SaveService;
 using UnityEngine;
 
 namespace Components.StateMachine.States
@@ -8,6 +9,7 @@ namespace Components.StateMachine.States
     {
         private int _currentLife;
         private int _currentLevel;
+        private int _currentScore;
         
         private const float MAX_SPEED = 15f;
         private const float SPEED_INCREMENT_PER_LEVEL = 0.75f;
@@ -44,15 +46,37 @@ namespace Components.StateMachine.States
 
             if (_currentLife <= 0)
             {
+                SaveHighScore();
                 StateMachine.ChangeState(new GameOverState(StateMachine, LevelParameters));
             }
         }
 
         private void HandleOrderCompleted(int score)
         {
+            UpdateLevelParameters();
+            _currentScore += score;
+            GameEventService.OnScoreUpdated?.Invoke(_currentScore);
+        }
+        
+        private void UpdateLevelParameters()
+        {
             _currentLevel++;
             var newParameters = CalculateLevelParameters(_currentLevel);
             GameEventService.OnLevelChanged?.Invoke(newParameters);
+        }
+
+        private void SaveHighScore()
+        {
+            if (!SaveService.TryLoad(out var saveData))
+            {
+                saveData = new SaveData();
+            }
+
+            if (saveData.HighScore < _currentScore)
+            {
+                saveData.HighScore = _currentScore;
+                SaveService.Save(saveData);
+            }
         }
 
         private LevelParametersInfo CalculateLevelParameters(int level)
