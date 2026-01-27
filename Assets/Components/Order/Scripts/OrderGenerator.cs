@@ -52,8 +52,9 @@ public class OrderGenerator : MonoBehaviour
     private Order GenerateOrder()
     {
         var newOrderLines = new Dictionary<string, OrderLine>();
+        var targetCount = Mathf.Min(_maxIngredientsPerOrder, _availableIngredients.Length);
 
-        for (var i = 0; i < _maxIngredientsPerOrder; i++)
+        while (newOrderLines.Count < targetCount)
         {
             var ingredient = _availableIngredients[Random.Range(0, _availableIngredients.Length)];
 
