@@ -42,12 +42,9 @@ namespace Components.StateMachine.States
                 return;
             }
 
-            if (_orderTimer == 0)
-            {
-                UpdateLife();
-                _orderTimer = LevelParameters.OrderTimeLimit;
-            }
-            
+            UpdateLife();
+            GameEventService.OnOrderFailed?.Invoke();
+            _orderTimer = LevelParameters.OrderTimeLimit;
         }
 
         public override void Exit()

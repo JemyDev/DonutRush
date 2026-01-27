@@ -20,6 +20,7 @@ public class OrderGenerator : MonoBehaviour
     private void Awake()
     {
         GameEventService.OnOrderCompleted += HandleCompletedOrder;
+        GameEventService.OnOrderFailed += HandleFailedOrder;
         GameEventService.OnLevelChanged += HandleLevelChanged;
     }
 
@@ -38,6 +39,7 @@ public class OrderGenerator : MonoBehaviour
     private void OnDestroy()
     {
         GameEventService.OnOrderCompleted -= HandleCompletedOrder;
+        GameEventService.OnOrderFailed -= HandleFailedOrder;
         GameEventService.OnLevelChanged -= HandleLevelChanged;
     }
 
@@ -67,6 +69,11 @@ public class OrderGenerator : MonoBehaviour
     }
 
     private void HandleCompletedOrder(int score)
+    {
+        CreateNewOrder();
+    }
+
+    private void HandleFailedOrder()
     {
         CreateNewOrder();
     }

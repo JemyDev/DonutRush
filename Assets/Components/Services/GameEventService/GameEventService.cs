@@ -42,6 +42,7 @@ namespace Services.GameEventService
         public static Action OnDoorInstantiated;
         public static Action<Order> OnOrderCreated;
         public static Action<int> OnOrderCompleted;
+        public static Action OnOrderFailed;
         public static Action<LevelParametersInfo> OnLevelChanged;
         
         // State Events
