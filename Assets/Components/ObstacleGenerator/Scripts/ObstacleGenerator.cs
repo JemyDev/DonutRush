@@ -75,14 +75,11 @@ public class ObstacleGenerator : MonoBehaviour
     {
         var newChunkIndex = Random.Range(0, _chunkPrefabs.Length);
 
-        if (_preventSameChunkGeneration)
+        if (_preventSameChunkGeneration && _chunkPrefabs.Length > 1)
         {
-            for (var i = 0; i < 10; i++)
+            while (newChunkIndex == _lastChunkIndex)
             {
-                if (newChunkIndex == _lastChunkIndex)
-                {
-                    newChunkIndex = Random.Range(0, _chunkPrefabs.Length);
-                }
+                newChunkIndex = Random.Range(0, _chunkPrefabs.Length);
             }
 
             _lastChunkIndex = newChunkIndex;

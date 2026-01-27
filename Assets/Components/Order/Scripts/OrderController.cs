@@ -67,6 +67,15 @@ public class OrderController : MonoBehaviour
     private void ValidateOrder()
     {
         _currentOrder.OrderLines.Clear();
+
+        if (!SaveService.TryLoad(out var saveData))
+        {
+            saveData = new SaveData();
+        }
+
+        saveData.TotalOrdersCompleted++;
+        SaveService.Save(saveData);
+
         GameEventService.OnOrderCompleted?.Invoke(_scoreToAdd);
     }
 }
