@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf3b59eb9b7d4daf89294e44e1553fbe, type: 3}
-  m_Name: Level2
+  m_Name: BaseLevelParameters
   m_EditorClassIdentifier: Assembly-CSharp::Components.Data.LevelParametersData
   _playerLife: 3
-  _speed: 10
-  _maxIngredientsPerOrder: 2
+  _speed: 5
+  _maxIngredientsPerOrder: 1
   _minIngredientsPerOrderLine: 1
-  _maxIngredientsPerOrderLine: 5
+  _maxIngredientsPerOrderLine: 3

@@ -1,17 +1,22 @@
 using Components.Data;
-using Components.SODatabase;
 using Services.GameEventService;
+using UnityEngine;
 
 namespace Components.StateMachine.States
 {
     public class GameState : State
     {
         private int _currentLife;
-        private int _currentLevelIndex;
+        private int _currentLevel;
+        
+        private const float MAX_SPEED = 15f;
+        private const float SPEED_INCREMENT_PER_LEVEL = 0.75f;
+        private const int MAX_INGREDIENTS_PER_ORDER = 3;
+        private const int MAX_INGREDIENTS_PER_ORDER_LINE = 8;
 
-        public GameState(StateMachine stateMachine, LevelParametersData levelParametersData, int levelIndex = 1) : base(stateMachine, levelParametersData)
+        public GameState(StateMachine stateMachine, LevelParametersData levelParametersData) : base(stateMachine, levelParametersData)
         {
-            _currentLevelIndex = levelIndex;
+            _currentLevel = 1;
         }
 
         public override void Enter()
@@ -45,13 +50,38 @@ namespace Components.StateMachine.States
 
         private void HandleOrderCompleted(int score)
         {
-            _currentLevelIndex++;
-            var newLevel = ScriptableObjectDatabase.Get<LevelParametersData>("Level" + _currentLevelIndex);
+            _currentLevel++;
+            var newParameters = CalculateLevelParameters(_currentLevel);
+            GameEventService.OnLevelChanged?.Invoke(newParameters);
+        }
 
-            if (newLevel is null)
-                return;
-            
-            GameEventService.OnLevelChanged?.Invoke(newLevel);
+        private LevelParametersInfo CalculateLevelParameters(int level)
+        {
+            // Speed: linear growth per level
+            var speed = LevelParameters.Speed + (level - 1) * SPEED_INCREMENT_PER_LEVEL;
+            speed = Mathf.Min(speed, MAX_SPEED);
+
+            // Max ingredients per order: +1 every 3 levels
+            var maxIngredientsPerOrder = LevelParameters.MaxIngredientsPerOrder + (level - 1) / 3;
+            maxIngredientsPerOrder = Mathf.Min(maxIngredientsPerOrder, MAX_INGREDIENTS_PER_ORDER);
+
+            // Min ingredients per line: +1 every 4 levels
+            var minIngredientsPerOrderLine = LevelParameters.MinIngredientsPerOrderLine + (level - 1) / 4;
+
+            // Max ingredients per line: +1 every 2 levels
+            var maxIngredientsPerOrderLine = LevelParameters.MaxIngredientsPerOrderLine + (level - 1) / 2;
+            maxIngredientsPerOrderLine = Mathf.Min(maxIngredientsPerOrderLine, MAX_INGREDIENTS_PER_ORDER_LINE);
+
+            // Ensure min <= max
+            minIngredientsPerOrderLine = Mathf.Min(minIngredientsPerOrderLine, maxIngredientsPerOrderLine);
+
+            return new LevelParametersInfo(
+                level,
+                speed,
+                maxIngredientsPerOrder,
+                minIngredientsPerOrderLine,
+                maxIngredientsPerOrderLine
+            );
         }
     }
 }

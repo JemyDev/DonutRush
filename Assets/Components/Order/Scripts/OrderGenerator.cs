@@ -4,7 +4,6 @@ using Components.SODatabase;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using Services.GameEventService;
-using Services.SaveService;
 
 /// <summary>
 /// Handle order generation with a random pick of Scriptable Object ingredients
@@ -12,7 +11,11 @@ using Services.SaveService;
 public class OrderGenerator : MonoBehaviour
 {
     private IngredientData[] _availableIngredients;
-    private LevelParametersData _levelParametersData;
+
+    // Current level parameters
+    private int _maxIngredientsPerOrder;
+    private int _minIngredientsPerOrderLine;
+    private int _maxIngredientsPerOrderLine;
 
     private void Awake()
     {
@@ -22,16 +25,13 @@ public class OrderGenerator : MonoBehaviour
 
     private void Start()
     {
-        var levelIndex = 1;
-        if (SaveService.TryLoad(out var saveData))
-        {
-            levelIndex = saveData.LevelIndex;
-        }
+        var baseParameters = ScriptableObjectDatabase.Get<LevelParametersData>("BaseLevelParameters");
+        _maxIngredientsPerOrder = baseParameters.MaxIngredientsPerOrder;
+        _minIngredientsPerOrderLine = baseParameters.MinIngredientsPerOrderLine;
+        _maxIngredientsPerOrderLine = baseParameters.MaxIngredientsPerOrderLine;
 
-        _levelParametersData = ScriptableObjectDatabase.Get<LevelParametersData>("Level" + levelIndex);
         _availableIngredients = ScriptableObjectDatabase.GetAll<IngredientData>();
 
-        // Create a new order on start
         CreateNewOrder();
     }
 
@@ -40,7 +40,7 @@ public class OrderGenerator : MonoBehaviour
         GameEventService.OnOrderCompleted -= HandleCompletedOrder;
         GameEventService.OnLevelChanged -= HandleLevelChanged;
     }
-    
+
     private void CreateNewOrder()
     {
         var newOrder = GenerateOrder();
@@ -51,14 +51,14 @@ public class OrderGenerator : MonoBehaviour
     {
         var newOrderLines = new Dictionary<string, OrderLine>();
 
-        for (var i = 0; i < _levelParametersData.MaxIngredientsPerOrder; i++)
+        for (var i = 0; i < _maxIngredientsPerOrder; i++)
         {
             var ingredient = _availableIngredients[Random.Range(0, _availableIngredients.Length)];
 
             if (newOrderLines.ContainsKey(ingredient.Name))
                 continue;
 
-            var quantity = Random.Range(_levelParametersData.MinIngredientsPerOrderLine, _levelParametersData.MaxIngredientsPerOrderLine + 1);
+            var quantity = Random.Range(_minIngredientsPerOrderLine, _maxIngredientsPerOrderLine + 1);
             var orderLine = new OrderLine(ingredient, quantity);
             newOrderLines.Add(ingredient.Name, orderLine);
         }
@@ -71,8 +71,10 @@ public class OrderGenerator : MonoBehaviour
         CreateNewOrder();
     }
 
-    private void HandleLevelChanged(LevelParametersData newParameters)
+    private void HandleLevelChanged(LevelParametersInfo newParameters)
     {
-        _levelParametersData = newParameters;
+        _maxIngredientsPerOrder = newParameters.MaxIngredientsPerOrder;
+        _minIngredientsPerOrderLine = newParameters.MinIngredientsPerOrderLine;
+        _maxIngredientsPerOrderLine = newParameters.MaxIngredientsPerOrderLine;
     }
 }

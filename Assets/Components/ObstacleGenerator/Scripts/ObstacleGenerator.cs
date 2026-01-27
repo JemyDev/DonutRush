@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Components.Data;
 using Components.SODatabase;
 using Services.GameEventService;
-using Services.SaveService;
 
 /// <summary>
 /// Generate infinite random chunks and make them translate
@@ -26,14 +25,9 @@ public class ObstacleGenerator : MonoBehaviour
 
     private void Start()
     {
-        var levelIndex = 1;
-        if (SaveService.TryLoad(out SaveData saveData))
-        {
-            levelIndex = saveData.LevelIndex;
-        }
-        var parameters = ScriptableObjectDatabase.Get<LevelParametersData>("Level" + levelIndex);
-        _translationSpeed = parameters.Speed;
-        
+        var baseParameters = ScriptableObjectDatabase.Get<LevelParametersData>("BaseLevelParameters");
+        _translationSpeed = baseParameters.Speed;
+
         AddBaseChunk();
         GameEventService.OnGameState += HandleGameState;
         GameEventService.OnLevelChanged += HandleLevelChanged;
@@ -141,7 +135,7 @@ public class ObstacleGenerator : MonoBehaviour
         GameEventService.OnDoorInstantiated?.Invoke();
     }
     
-    private void HandleLevelChanged(LevelParametersData newParameters)
+    private void HandleLevelChanged(LevelParametersInfo newParameters)
     {
         _translationSpeed = newParameters.Speed;
     }

@@ -1,5 +1,4 @@
 using UnityEngine;
-using Services.SaveService;
 using Components.Data;
 using Components.SODatabase;
 using Components.StateMachine.States;
@@ -12,20 +11,14 @@ namespace Components.StateMachine
 
         private void Start()
         {
-            var levelIndex = 1;
-            if (SaveService.TryLoad(out var saveData))
-            {
-                levelIndex = saveData.LevelIndex;
-            }
-            
-            var parameters = ScriptableObjectDatabase.Get<LevelParametersData>("Level" + levelIndex);
-            
+            var baseParameters = ScriptableObjectDatabase.Get<LevelParametersData>("BaseLevelParameters");
+
             _stateMachine = new StateMachine();
-            var initialState = new CountdownState(_stateMachine, parameters, levelIndex);
+            var initialState = new CountdownState(_stateMachine, baseParameters);
 
             _stateMachine.ChangeState(initialState);
         }
-        
+
         public void Update() => _stateMachine.Update();
     }
 }

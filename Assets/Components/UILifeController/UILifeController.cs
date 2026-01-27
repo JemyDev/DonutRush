@@ -15,13 +15,7 @@ public class UILifeController : MonoBehaviour
 
     private void Start()
     {
-        var levelIndex = 1;
-        if (SaveService.TryLoad(out var saveData))
-        {
-            levelIndex = saveData.LevelIndex;
-        }
-        
-        var parameters = ScriptableObjectDatabase.Get<LevelParametersData>("Level" + levelIndex);
+        var parameters = ScriptableObjectDatabase.Get<LevelParametersData>("BaseLevelParameters");
         SetLife(parameters.PlayerLife);
         GameEventService.OnPlayerLifeUpdated += SetLife;
     }

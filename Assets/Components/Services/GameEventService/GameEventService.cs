@@ -42,6 +42,7 @@ namespace Services.GameEventService
         public static Action OnDoorInstantiated;
         public static Action<Order> OnOrderCreated;
         public static Action<int> OnOrderCompleted;
+        public static Action<LevelParametersInfo> OnLevelChanged;
         
         // State Events
         public static Action<bool> OnCountdownState;
@@ -49,8 +50,5 @@ namespace Services.GameEventService
         public static Action<int> OnPlayerLifeUpdated;
         public static Action<bool> OnGameState;
         public static Action<bool> OnGameOverState;
-
-        // Level Events
-        public static Action<LevelParametersData> OnLevelChanged;
     }
 }

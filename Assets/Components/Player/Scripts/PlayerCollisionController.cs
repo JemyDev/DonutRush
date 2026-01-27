@@ -14,8 +14,8 @@ namespace Components.Player.Scripts
 
         [Header("Invulnerability Parameters")]
         [SerializeField] private bool _isInvulnerable;
-        
-        private bool _hasTriggeredDoor;
+
+        private Collider _lastTriggeredDoor;
         private readonly Collider[] _hitResults = new Collider[1];
         private const string WALL_TAG = "Wall";
         private const string DOOR_TAG = "Door";
@@ -40,9 +40,9 @@ namespace Components.Player.Scripts
                             _isInvulnerable = true;
                             GameEventService.OnPlayerCollision?.Invoke();
                         }
-                        else if (_hitResults[i].CompareTag(DOOR_TAG) && !_hasTriggeredDoor)
+                        else if (_hitResults[i].CompareTag(DOOR_TAG) && _hitResults[i] != _lastTriggeredDoor)
                         {
-                            _hasTriggeredDoor = true;
+                            _lastTriggeredDoor = _hitResults[i];
                             GameEventService.OnPlayerTriggerDoorPassed?.Invoke(_hitResults[i]);
                         }
                     }
@@ -51,7 +51,6 @@ namespace Components.Player.Scripts
                 }
                 case 0:
                     _isInvulnerable = false;
-                    _hasTriggeredDoor = false;
                     break;
             }
         }

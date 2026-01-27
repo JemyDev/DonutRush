@@ -6,20 +6,16 @@ namespace Components.StateMachine.States
 {
     public class CountdownState : State
     {
-        private readonly int _levelIndex;
         private float _countdownTimer;
 
-        public CountdownState(StateMachine stateMachine, LevelParametersData levelParametersData, int levelIndex = 1) : base(stateMachine, levelParametersData)
-        {
-            _levelIndex = levelIndex;
-        }
-        
+        public CountdownState(StateMachine stateMachine, LevelParametersData levelParametersData) : base(stateMachine, levelParametersData) { }
+
         public override void Enter()
         {
             GameEventService.OnCountdownState?.Invoke(true);
             _countdownTimer = 3;
         }
-        
+
         public override void Update()
         {
             _countdownTimer -= Time.deltaTime;
@@ -29,10 +25,10 @@ namespace Components.StateMachine.States
                 GameEventService.OnCountdownTick?.Invoke(_countdownTimer);
                 return;
             }
-            
-            StateMachine.ChangeState(new GameState(StateMachine, LevelParameters, _levelIndex));
+
+            StateMachine.ChangeState(new GameState(StateMachine, LevelParameters));
         }
-        
+
         public override void Exit()
         {
             GameEventService.OnCountdownState?.Invoke(false);
