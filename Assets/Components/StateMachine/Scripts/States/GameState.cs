@@ -24,12 +24,14 @@ namespace Components.StateMachine.States
         public override void Enter()
         {
             GameEventService.OnGameState?.Invoke(true);
-            
+
             GameEventService.OnPlayerCollision += HandlePlayerCollision;
             GameEventService.OnOrderCompleted += HandleOrderCompleted;
 
             _lifeManager.OnDeath += HandleDeath;
             _timerManager.OnTimerExpired += HandleTimerExpired;
+
+            GameEventService.OnLevelStarted?.Invoke(_levelManager.GetCurrentLevelParameters());
         }
 
         public override void Update()

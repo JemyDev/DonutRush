@@ -44,6 +44,7 @@ namespace Services.GameEventService
         public static Action<int> OnOrderCompleted;
         public static Action OnOrderFailed;
         public static Action<LevelParametersInfo> OnLevelChanged;
+        public static Action<LevelParametersInfo> OnLevelStarted;
         
         // State Events
         public static Action<bool> OnCountdownState;

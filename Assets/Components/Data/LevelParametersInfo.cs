@@ -13,7 +13,8 @@ namespace Components.Data
             float speed,
             int maxIngredientsPerOrder,
             int minIngredientsPerOrderLine,
-            int maxIngredientsPerOrderLine)
+            int maxIngredientsPerOrderLine
+            )
         {
             Level = level;
             Speed = speed;
