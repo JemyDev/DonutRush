@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using Components.Data;
 using Components.SODatabase;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using Services.GameEventService;
+using Components.Data;
 
 /// <summary>
 /// Handle order generation with a random pick of Scriptable Object ingredients
@@ -21,25 +21,20 @@ public class OrderGenerator : MonoBehaviour
     {
         GameEventService.OnOrderCompleted += HandleCompletedOrder;
         GameEventService.OnOrderFailed += HandleFailedOrder;
+        GameEventService.OnLevelStarted += HandleLevelStarted;
         GameEventService.OnLevelChanged += HandleLevelChanged;
     }
 
     private void Start()
     {
-        var baseParameters = ScriptableObjectDatabase.Get<LevelParametersData>("BaseLevelParameters");
-        _maxIngredientsPerOrder = baseParameters.MaxIngredientsPerOrder;
-        _minIngredientsPerOrderLine = baseParameters.MinIngredientsPerOrderLine;
-        _maxIngredientsPerOrderLine = baseParameters.MaxIngredientsPerOrderLine;
-
         _availableIngredients = ScriptableObjectDatabase.GetAll<IngredientData>();
-
-        CreateNewOrder();
     }
 
     private void OnDestroy()
     {
         GameEventService.OnOrderCompleted -= HandleCompletedOrder;
         GameEventService.OnOrderFailed -= HandleFailedOrder;
+        GameEventService.OnLevelStarted -= HandleLevelStarted;
         GameEventService.OnLevelChanged -= HandleLevelChanged;
     }
 
@@ -78,11 +73,19 @@ public class OrderGenerator : MonoBehaviour
     {
         CreateNewOrder();
     }
-
+    
     private void HandleLevelChanged(LevelParametersInfo newParameters)
     {
         _maxIngredientsPerOrder = newParameters.MaxIngredientsPerOrder;
         _minIngredientsPerOrderLine = newParameters.MinIngredientsPerOrderLine;
         _maxIngredientsPerOrderLine = newParameters.MaxIngredientsPerOrderLine;
+    }
+
+    private void HandleLevelStarted(LevelParametersInfo newParameters)
+    {
+        _maxIngredientsPerOrder = newParameters.MaxIngredientsPerOrder;
+        _minIngredientsPerOrderLine = newParameters.MinIngredientsPerOrderLine;
+        _maxIngredientsPerOrderLine = newParameters.MaxIngredientsPerOrderLine;
+        CreateNewOrder();
     }
 }

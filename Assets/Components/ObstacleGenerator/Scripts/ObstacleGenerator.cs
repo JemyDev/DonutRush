@@ -26,7 +26,7 @@ public class ObstacleGenerator : MonoBehaviour
     private void Start()
     {
         var baseParameters = ScriptableObjectDatabase.Get<LevelParametersData>("BaseLevelParameters");
-        _translationSpeed = baseParameters.Speed;
+        _translationSpeed = baseParameters.BaseSpeed;
 
         AddBaseChunk();
         GameEventService.OnGameState += HandleGameState;
