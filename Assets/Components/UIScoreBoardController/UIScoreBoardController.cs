@@ -13,11 +13,6 @@ public class UIScoreBoardController : MonoBehaviour
     
     private void Start()
     {
-        if (!SaveService.TryLoad(out _saveData))
-        {
-            _saveData = new SaveData();
-        }
-
         UpdateTotalRuns();
         UpdateHighScore();
         UpdateTotalIngredientsCollected();
@@ -26,21 +21,21 @@ public class UIScoreBoardController : MonoBehaviour
     
     private void UpdateTotalRuns()
     {
-        _totalRunsText.text = _saveData.RunCount.ToString();
+        _totalRunsText.text = SaveDataService.RunCount.ToString();
     }
     
     private void UpdateHighScore()
     {
-        _highScoreText.text = _saveData.HighScore.ToString();
+        _highScoreText.text = SaveDataService.HighScore.ToString();
     }
     
     private void UpdateTotalIngredientsCollected()
     {
-        _totalIngredientsCollectedText.text = _saveData.TotalIngredientsCollected.ToString();
+        _totalIngredientsCollectedText.text = SaveDataService.TotalIngredientsCollected.ToString();
     }
     
     private void UpdateTotalOrdersCompleted()
     {
-        _totalOrdersCompletedText.text = _saveData.TotalOrdersCompleted.ToString();
+        _totalOrdersCompletedText.text = SaveDataService.TotalOrdersCompleted.ToString();
     }
 }

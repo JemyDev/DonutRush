@@ -49,6 +49,8 @@ namespace Components.StateMachine.States
             
             _lifeManager.OnDeath -= HandleDeath;
             _timerManager.OnTimerExpired -= HandleTimerExpired;
+            
+            SaveDataService.SaveIfDirty();
         }
         
         private void HandlePlayerCollision()
@@ -66,7 +68,7 @@ namespace Components.StateMachine.States
 
         private void HandleDeath()
         {
-            SaveHighScore();
+            UpdateHighScore();
             StateMachine.ChangeState(new GameOverState(StateMachine, LevelParameters));
         }
         
@@ -81,18 +83,9 @@ namespace Components.StateMachine.States
             GameEventService.OnLevelChanged?.Invoke(newParameters);
         }
 
-        private void SaveHighScore()
+        private void UpdateHighScore()
         {
-            if (!SaveService.TryLoad(out var saveData))
-            {
-                saveData = new SaveData();
-            }
-
-            if (saveData.HighScore < _scoreManager.CurrentScore)
-            {
-                saveData.HighScore = _scoreManager.CurrentScore;
-                SaveService.Save(saveData);
-            }
+            SaveDataService.UpdateHighScore(_scoreManager.CurrentScore);
         }
     }
 }

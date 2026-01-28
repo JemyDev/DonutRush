@@ -35,8 +35,6 @@ namespace Components.Managers
             // Max ingredients per order: starts at min, +1 every 3 levels, capped at max
             var maxIngredientsPerOrder = _levelParametersData.MinIngredientsPerOrder + (_currentLevel - 1) / 3;
             maxIngredientsPerOrder = Mathf.Min(maxIngredientsPerOrder, _levelParametersData.MaxIngredientsPerOrder);
-            
-            Debug.Log(maxIngredientsPerOrder);
 
             // Min ingredients per line: +1 every 4 levels
             var minIngredientsPerOrderLine = _levelParametersData.MinIngredientsPerOrderLine + (_currentLevel - 1) / 4;
