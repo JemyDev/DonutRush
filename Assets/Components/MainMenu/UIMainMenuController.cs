@@ -7,7 +7,7 @@ public class UIMainMenuController : MonoBehaviour
     public void PlayGame()
     {
         // Save total runs
-        SaveDataService.UpdateRunCount();
+        ProgressService.RecordRunCount();
         SceneLoaderService.LoadLevel();
     }
 

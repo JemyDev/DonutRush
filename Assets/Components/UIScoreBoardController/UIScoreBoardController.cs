@@ -9,7 +9,7 @@ public class UIScoreBoardController : MonoBehaviour
     [SerializeField] private TMP_Text _totalIngredientsCollectedText;
     [SerializeField] private TMP_Text _totalOrdersCompletedText;
 
-    private SaveData _saveData;
+    private PlayerProgress _playerProgress;
     
     private void Start()
     {
@@ -21,21 +21,21 @@ public class UIScoreBoardController : MonoBehaviour
     
     private void UpdateTotalRuns()
     {
-        _totalRunsText.text = SaveDataService.RunCount.ToString();
+        _totalRunsText.text = ProgressService.CurrentProgress.RunCount.ToString();
     }
     
     private void UpdateHighScore()
     {
-        _highScoreText.text = SaveDataService.HighScore.ToString();
+        _highScoreText.text = ProgressService.CurrentProgress.HighScore.ToString();
     }
     
     private void UpdateTotalIngredientsCollected()
     {
-        _totalIngredientsCollectedText.text = SaveDataService.TotalIngredientsCollected.ToString();
+        _totalIngredientsCollectedText.text = ProgressService.CurrentProgress.TotalIngredientsCollected.ToString();
     }
     
     private void UpdateTotalOrdersCompleted()
     {
-        _totalOrdersCompletedText.text = SaveDataService.TotalOrdersCompleted.ToString();
+        _totalOrdersCompletedText.text = ProgressService.CurrentProgress.TotalOrdersCompleted.ToString();
     }
 }

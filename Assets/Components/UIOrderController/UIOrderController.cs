@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Services.GameEventService;
@@ -12,6 +13,7 @@ public class UIOrderController : MonoBehaviour
     [SerializeField] private TMP_Text _totalText;
 
     private Order _currentOrder;
+    private readonly Dictionary<string, UIOrderLineController> _orderLineControllers = new();
     private int TotalOrderCalories => _currentOrder.TotalCalories;
     
     private void Awake()
@@ -29,13 +31,13 @@ public class UIOrderController : MonoBehaviour
     private void HandleOrderCreated(Order order)
     {
         ClearExistingOrderLines();
+        _currentOrder = order;
 
         foreach (var orderLine in order.OrderLines)
         {
             CreateOrderLineUI(orderLine.Value);
         }
-
-        _currentOrder = order;
+        
         UpdateTotalCalories();
     }
     
@@ -45,12 +47,17 @@ public class UIOrderController : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+
+        _orderLineControllers.Clear();
     }
     
     private void CreateOrderLineUI(OrderLine orderLine)
     {
         var orderLineUI = Instantiate(_orderLinePrefab, transform);
-        orderLineUI.AddSprite(orderLine.Ingredient.Sprite);
+        orderLineUI.SetSprite(orderLine.Ingredient.Sprite);
+        orderLineUI.UpdateQuantity(orderLine.Quantity);
+        
+        _orderLineControllers[orderLine.Ingredient.Name] = orderLineUI;
     }
     
     private void UpdateTotalCalories()
@@ -60,6 +67,12 @@ public class UIOrderController : MonoBehaviour
     
     private void HandleTotalCaloriesUpdate(IngredientData ingredient)
     {
+        if (_orderLineControllers.TryGetValue(ingredient.Name, out var orderLineController))
+        {
+            var orderLine = _currentOrder.OrderLines[ingredient.Name];
+            orderLineController.UpdateQuantity(orderLine.Quantity);
+        }
+        
         UpdateTotalCalories();
     }
 }

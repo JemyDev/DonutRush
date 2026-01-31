@@ -12,17 +12,17 @@ public class IngredientSpawnHandler : MonoBehaviour
     
     private void Awake()
     {
-        GameEventService.OnOrderCreated += HandleIngredientDistribution;
+        GameEventService.OnOrderCreated += HandleOrderCreated;
         GameEventService.OnDoorInstantiated += HandleDoorInstantiated;
     }
 
     private void OnDestroy()
     {
-        GameEventService.OnOrderCreated -= HandleIngredientDistribution;
+        GameEventService.OnOrderCreated -= HandleOrderCreated;
         GameEventService.OnDoorInstantiated -= HandleDoorInstantiated;
     }
     
-    private void HandleIngredientDistribution(Order order)
+    private void HandleOrderCreated(Order order)
     {
         _currentOrderIngredients = order.OrderLines.Values.Select(ol => ol.Ingredient).ToArray();
     }

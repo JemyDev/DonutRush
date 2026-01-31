@@ -49,7 +49,7 @@ public class OrderController : MonoBehaviour
             _currentOrder.OrderLines[ingredientName] = orderLine;
             
             // Save total ingredients collected
-            SaveDataService.UpdateTotalIngredientsCollected();
+            ProgressService.UpdateTotalIngredientsCollected();
         }
 
         if (IsOrderCompleted && _currentOrder.OrderLines.Count > 0)
@@ -61,7 +61,7 @@ public class OrderController : MonoBehaviour
     private void ValidateOrder()
     {
         _currentOrder.OrderLines.Clear();
-        SaveDataService.UpdateTotalOrdersCompleted();
+        ProgressService.UpdateTotalOrdersCompleted();
         GameEventService.OnOrderCompleted?.Invoke(_scoreToAdd);
     }
 }
