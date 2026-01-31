@@ -1,5 +1,4 @@
 using Components.Data;
-using Components.Managers;
 using Services.GameEventService;
 using Services.SaveService;
 using UnityEngine;
@@ -8,17 +7,17 @@ namespace Components.StateMachine.States
 {
     public class GameState : State
     {
-        private readonly LifeManager _lifeManager;
-        private readonly ScoreManager _scoreManager;
-        private readonly TimerManager _timerManager;
-        private readonly LevelManager _levelManager;
+        private readonly LifeTracker _lifeTracker;
+        private readonly ScoreTracker _scoreTracker;
+        private readonly OrderTimerTracker _orderTimerTracker;
+        private readonly LevelTracker _levelTracker;
 
         public GameState(StateMachine stateMachine, LevelParametersData levelParametersData) : base(stateMachine, levelParametersData)
         {
-            _lifeManager = new LifeManager(LevelParameters.PlayerLife);
-            _scoreManager = new ScoreManager();
-            _timerManager = new TimerManager(LevelParameters.OrderTimeLimit);
-            _levelManager = new LevelManager(levelParametersData);
+            _lifeTracker = new LifeTracker(LevelParameters.PlayerLife);
+            _scoreTracker = new ScoreTracker();
+            _orderTimerTracker = new OrderTimerTracker(LevelParameters.OrderTimeLimit);
+            _levelTracker = new LevelTracker(LevelParameters);
         }
 
         public override void Enter()
@@ -28,16 +27,16 @@ namespace Components.StateMachine.States
             GameEventService.OnPlayerCollision += HandlePlayerCollision;
             GameEventService.OnOrderCompleted += HandleOrderCompleted;
 
-            _lifeManager.OnDeath += HandleDeath;
-            _timerManager.OnTimerExpired += HandleTimerExpired;
+            _lifeTracker.OnDeath += HandleDeath;
+            _orderTimerTracker.OnTimerExpired += HandleTimerExpired;
 
-            GameEventService.OnLevelStarted?.Invoke(_levelManager.GetCurrentLevelParameters());
+            GameEventService.OnLevelStarted?.Invoke(_levelTracker.GetCurrentLevelParameters());
         }
 
         public override void Update()
         {
-            _timerManager.Update(Time.deltaTime);
-            GameEventService.OnTimerTick?.Invoke(_timerManager.RemainingTime);
+            _orderTimerTracker.Update(Time.deltaTime);
+            GameEventService.OnTimerTick?.Invoke(_orderTimerTracker.RemainingTime);
         }
 
         public override void Exit()
@@ -47,52 +46,45 @@ namespace Components.StateMachine.States
             GameEventService.OnPlayerCollision -= HandlePlayerCollision;
             GameEventService.OnOrderCompleted -= HandleOrderCompleted;
             
-            _lifeManager.OnDeath -= HandleDeath;
-            _timerManager.OnTimerExpired -= HandleTimerExpired;
+            _lifeTracker.OnDeath -= HandleDeath;
+            _orderTimerTracker.OnTimerExpired -= HandleTimerExpired;
+            
+            ProgressService.SaveIfDirty();
         }
         
         private void HandlePlayerCollision()
         {
-            _lifeManager.LoseLife();
-            GameEventService.OnPlayerLifeUpdated?.Invoke(_lifeManager.CurrentLife);
+            _lifeTracker.LoseLife();
+            GameEventService.OnPlayerLifeUpdated?.Invoke(_lifeTracker.CurrentLife);
         }
 
         private void HandleTimerExpired()
         {
-            _lifeManager.LoseLife();
-            GameEventService.OnPlayerLifeUpdated?.Invoke(_lifeManager.CurrentLife);
+            _lifeTracker.LoseLife();
+            GameEventService.OnPlayerLifeUpdated?.Invoke(_lifeTracker.CurrentLife);
             GameEventService.OnOrderFailed?.Invoke();
         }
 
         private void HandleDeath()
         {
-            SaveHighScore();
+            UpdateHighScore();
             StateMachine.ChangeState(new GameOverState(StateMachine, LevelParameters));
         }
         
         private void HandleOrderCompleted(int score)
         {
-            _scoreManager.AddScore(score);
-            _timerManager.Reset();
+            _scoreTracker.AddScore(score);
+            _orderTimerTracker.Reset();
             
-            var newParameters = _levelManager.AdvanceLevel();
+            var newParameters = _levelTracker.AdvanceLevel();
 
-            GameEventService.OnScoreUpdated?.Invoke(_scoreManager.CurrentScore);
+            GameEventService.OnScoreUpdated?.Invoke(_scoreTracker.CurrentScore);
             GameEventService.OnLevelChanged?.Invoke(newParameters);
         }
 
-        private void SaveHighScore()
+        private void UpdateHighScore()
         {
-            if (!SaveService.TryLoad(out var saveData))
-            {
-                saveData = new SaveData();
-            }
-
-            if (saveData.HighScore < _scoreManager.CurrentScore)
-            {
-                saveData.HighScore = _scoreManager.CurrentScore;
-                SaveService.Save(saveData);
-            }
+            ProgressService.RecordHighScore(_scoreTracker.CurrentScore);
         }
     }
 }

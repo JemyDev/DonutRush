@@ -4,18 +4,10 @@ using Services.SceneLoaderService;
 
 public class UIMainMenuController : MonoBehaviour
 {
-    public void PlayGame(int levelIndex)
+    public void PlayGame()
     {
-        // Save total ingredients collected
-        if (!SaveService.TryLoad(out var saveData))
-        {
-            saveData = new SaveData();
-        }
-        
-        saveData.RunCount++;
-        saveData.LevelIndex = levelIndex;
-        Save(saveData);
-
+        // Save total runs
+        ProgressService.RecordRunCount();
         SceneLoaderService.LoadLevel();
     }
 
@@ -26,20 +18,5 @@ public class UIMainMenuController : MonoBehaviour
         #else
             Application.Quit();
         #endif
-    }
-
-    public SaveData GetSaveData()
-    {
-        if (!SaveService.TryLoad(out var saveData))
-        {
-            saveData = new SaveData();
-        }
-
-        return saveData;
-    }
-
-    public void Save(SaveData saveData)
-    {
-        SaveService.Save(saveData);
     }
 }
