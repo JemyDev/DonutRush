@@ -8,18 +8,19 @@ using Services.GameEventService;
 public class IngredientSpawnHandler : MonoBehaviour
 {
     [SerializeField] private IngredientData[] _currentOrderIngredients;
-    [SerializeField] private IngredientData[] _defaultIngredientsList;
     
     private void Awake()
     {
         GameEventService.OnOrderCreated += HandleOrderCreated;
         GameEventService.OnDoorInstantiated += HandleDoorInstantiated;
+        GameEventService.OnIngredientOrderLineCompleted += HandleIngredientOrderLineCompleted;
     }
 
     private void OnDestroy()
     {
         GameEventService.OnOrderCreated -= HandleOrderCreated;
         GameEventService.OnDoorInstantiated -= HandleDoorInstantiated;
+        GameEventService.OnIngredientOrderLineCompleted -= HandleIngredientOrderLineCompleted;
     }
     
     private void HandleOrderCreated(Order order)
@@ -27,14 +28,16 @@ public class IngredientSpawnHandler : MonoBehaviour
         _currentOrderIngredients = order.OrderLines.Values.Select(ol => ol.Ingredient).ToArray();
     }
 
+    private void HandleIngredientOrderLineCompleted(IngredientData ingredient)
+    {
+        _currentOrderIngredients = _currentOrderIngredients.Where(i => i != ingredient).ToArray();
+    }
+
     private void HandleDoorInstantiated()
     {
-        // Check if there are ingredients in the current order; if not, use the default list
         if (_currentOrderIngredients == null || _currentOrderIngredients.Length == 0)
-        {
-            _currentOrderIngredients = _defaultIngredientsList;
-        }
-        
+            return;
+
         var randomIndex = Random.Range(0, _currentOrderIngredients.Length);
         GameEventService.OnIngredientSpawned?.Invoke(_currentOrderIngredients[randomIndex]);
     }

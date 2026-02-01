@@ -22,15 +22,15 @@ namespace Components.StateMachine.States
 
         public override void Enter()
         {
-            GameEventService.OnGameState?.Invoke(true);
-
             GameEventService.OnPlayerCollision += HandlePlayerCollision;
             GameEventService.OnOrderCompleted += HandleOrderCompleted;
 
             _lifeTracker.OnDeath += HandleDeath;
             _orderTimerTracker.OnTimerExpired += HandleTimerExpired;
 
+            // Order must be created before game starts (so ingredients can spawn on doors)
             GameEventService.OnLevelStarted?.Invoke(_levelTracker.GetCurrentLevelParameters());
+            GameEventService.OnGameState?.Invoke(true);
         }
 
         public override void Update()
