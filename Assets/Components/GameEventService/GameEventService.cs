@@ -70,6 +70,12 @@ namespace Services.GameEventService
         public static Action<IngredientData> OnIngredientSpawned;
 
         /// <summary>
+        /// Ingredient order line completed (quantity reached 0)
+        /// <param name="ingredient">Ingredient that was fully collected</param>
+        /// </summary>
+        public static Action<IngredientData> OnIngredientOrderLineCompleted;
+
+        /// <summary>
         /// Door instantiated on a chunk
         /// </summary>
         public static Action OnDoorInstantiated;
