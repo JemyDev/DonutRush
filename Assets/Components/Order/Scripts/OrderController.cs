@@ -47,9 +47,15 @@ public class OrderController : MonoBehaviour
         {
             orderLine.DecreaseQuantity();
             _currentOrder.OrderLines[ingredientName] = orderLine;
-            
+
             // Save total ingredients collected
             ProgressService.UpdateTotalIngredientsCollected();
+
+            // Notify when ingredient quantity reaches 0
+            if (orderLine.Quantity == 0)
+            {
+                GameEventService.OnIngredientOrderLineCompleted?.Invoke(orderLine.Ingredient);
+            }
         }
 
         if (IsOrderCompleted && _currentOrder.OrderLines.Count > 0)
