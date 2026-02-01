@@ -17,7 +17,7 @@ namespace Components.Player.Scripts
 
         private Collider _lastTriggeredDoor;
         private readonly Collider[] _hitResults = new Collider[1];
-        private const string WALL_TAG = "Wall";
+        private const string OBSTACLE_TAG = "Obstacle";
         private const string DOOR_TAG = "Door";
 
         private void Update()
@@ -35,7 +35,7 @@ namespace Components.Player.Scripts
                         if (!_hitResults[i])
                             continue;
 
-                        if (_hitResults[i].CompareTag(WALL_TAG) && !_isInvulnerable)
+                        if (_hitResults[i].CompareTag(OBSTACLE_TAG) && !_isInvulnerable)
                         {
                             _isInvulnerable = true;
                             GameEventService.OnPlayerCollision?.Invoke();
