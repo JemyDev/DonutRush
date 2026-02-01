@@ -7,6 +7,5 @@ public class ChunkController : MonoBehaviour
     
     public Transform EndAnchor => _endAnchor;
     public bool IsBehind => EndAnchor.position.z <= 0;
-    public DoorController DoorPrefab => _doorPrefab;
     public bool HasDoorPrefab => _doorPrefab != null;
 }
