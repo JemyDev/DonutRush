@@ -480,6 +480,9 @@ MonoBehaviour:
   - {fileID: 5257790882892001718, guid: 201ea13ad0fd44a4689718a209f4feda, type: 3}
   - {fileID: 700052206457168482, guid: 6de79867c53a94d4d98e228f59b8fb90, type: 3}
   - {fileID: 4099437477763088553, guid: c63f05f2c47fb644a93323f0377ce4cc, type: 3}
+  - {fileID: 2211727701360810365, guid: 27b5bf4a59f5e794fa30b16d3948a648, type: 3}
+  - {fileID: 2211727701360810365, guid: fab2d52abde80024ebef3cc3a77131f5, type: 3}
+  - {fileID: 5126445422553720334, guid: e1afa6c5c21e46544adaa6194927f419, type: 3}
 --- !u!1 &698271799
 GameObject:
   m_ObjectHideFlags: 0
