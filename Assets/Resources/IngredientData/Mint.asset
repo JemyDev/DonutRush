@@ -16,5 +16,5 @@ MonoBehaviour:
   _score: 10
   _name: Mint
   _sprite: {fileID: 21300000, guid: 54e45d5f21010431084a9de39db2da52, type: 3}
-  _prefab: {fileID: 0}
+  _prefab: {fileID: 8649942313255769380, guid: 99e40c7718da4694d8513cf689731d33, type: 3}
   _material: {fileID: 2100000, guid: 0060bf09b6c324a3691f728ca9bfff26, type: 2}

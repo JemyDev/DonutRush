@@ -16,5 +16,5 @@ MonoBehaviour:
   _score: 75
   _name: Blueberry
   _sprite: {fileID: 21300000, guid: 26b4d8692c5e74d17bd9dc28bcbe961b, type: 3}
-  _prefab: {fileID: 0}
+  _prefab: {fileID: 1329257957610564759, guid: 7e3eaa022014ee94e86ec1d53a44760f, type: 3}
   _material: {fileID: 2100000, guid: fdcd0dbbc04384eeab7c6b8e838414f3, type: 2}
