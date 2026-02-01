@@ -12,6 +12,7 @@ public class DoorController : MonoBehaviour
     [Header("Door Prefab Parameters")]
     [SerializeField] private MeshRenderer[] _wallsMeshRenderer;
     [SerializeField] private Transform _doorTrigger;
+    [SerializeField] private Transform _doorIngredientPlaceholder;
 
     private void Awake()
     {
@@ -31,6 +32,7 @@ public class DoorController : MonoBehaviour
         
         _ingredient = ingredient;
         UpdateWallsMaterial();
+        AddIngredientToPlaceholder();
     }
     
     private void HandleDoorPassed(Collider doorReference)
@@ -39,6 +41,13 @@ public class DoorController : MonoBehaviour
         {
             GameEventService.OnIngredientCollected?.Invoke(_ingredient);
         }
+    }
+    
+    private void AddIngredientToPlaceholder()
+    {
+        if (!_ingredient) return;
+        
+        Instantiate(_ingredient.Prefab, _doorIngredientPlaceholder);
     }
     
     private void UpdateWallsMaterial()

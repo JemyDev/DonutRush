@@ -16,5 +16,5 @@ MonoBehaviour:
   _score: 25
   _name: Strawberry
   _sprite: {fileID: 21300000, guid: b72023ef6c5c54ebb94ee8c520cfe2e9, type: 3}
-  _prefab: {fileID: 0}
+  _prefab: {fileID: 2349399712495436713, guid: a69af6ec7b690d740a41583f562f3778, type: 3}
   _material: {fileID: 2100000, guid: 9d8deb4f3f738469ba18b4c914317298, type: 2}

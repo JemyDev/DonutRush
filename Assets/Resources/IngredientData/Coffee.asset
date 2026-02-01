@@ -16,5 +16,5 @@ MonoBehaviour:
   _score: 15
   _name: Coffee
   _sprite: {fileID: 21300000, guid: e0654092146b349cdbf2909a9205bca0, type: 3}
-  _prefab: {fileID: 0}
+  _prefab: {fileID: 8374747481275236722, guid: 0765608d607b7a14287ab4c3ada7afe1, type: 3}
   _material: {fileID: 2100000, guid: a6c08edcc0ecb4292b73e1092ba2a664, type: 2}
