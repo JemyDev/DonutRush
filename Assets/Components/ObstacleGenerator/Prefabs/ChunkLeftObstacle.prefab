@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleController
   _fallDuration: 1.5
   _delayBetweenFalls: 1.5
-  _initialDelayRange: {x: 3, y: 6}
+  _initialDelayRange: {x: 1, y: 3}
   _fallCurve:
     serializedVersion: 2
     m_Curve:
