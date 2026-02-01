@@ -28,7 +28,6 @@ public class ObstacleGenerator : MonoBehaviour
         var baseParameters = ScriptableObjectDatabase.Get<LevelParametersData>("BaseLevelParameters");
         _translationSpeed = baseParameters.BaseSpeed;
 
-        AddBaseChunk();
         GameEventService.OnGameState += HandleGameState;
         GameEventService.OnLevelChanged += HandleLevelChanged;
     }
@@ -55,6 +54,11 @@ public class ObstacleGenerator : MonoBehaviour
     private void HandleGameState(bool enterState)
     {
         _enabled = enterState;
+
+        if (enterState && _activeChunks.Count == 0)
+        {
+            AddBaseChunk();
+        }
     }
     
     private void AddBaseChunk()
